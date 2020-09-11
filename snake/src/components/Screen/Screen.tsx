@@ -7,6 +7,7 @@ import styles from './Screen.module.css'
 interface ScreenProps {
   gameState: GameState
   gridSize: GridSize
+  cellSize: number
 }
 
 const Screen: React.FC<ScreenProps> = (props) => {
@@ -36,20 +37,20 @@ const Screen: React.FC<ScreenProps> = (props) => {
     // paint food
     canvasContext.fillStyle = '#E66916'
     canvasContext.fillRect(
-      props.gameState.foodLocation.x * props.gameState.cellSize,
-      props.gameState.foodLocation.y * props.gameState.cellSize,
-      props.gameState.cellSize,
-      props.gameState.cellSize,
+      props.gameState.foodPosition.x * props.cellSize,
+      props.gameState.foodPosition.y * props.cellSize,
+      props.cellSize,
+      props.cellSize,
     )
 
     // paint snake
     canvasContext.fillStyle = '#C2C2C2'
     props.gameState.snakeBody.forEach((snakePiece) => {
       canvasContext.fillRect(
-        snakePiece.x * props.gameState.cellSize,
-        snakePiece.y * props.gameState.cellSize,
-        props.gameState.cellSize,
-        props.gameState.cellSize,
+        snakePiece.x * props.cellSize,
+        snakePiece.y * props.cellSize,
+        props.cellSize,
+        props.cellSize,
       )
     })
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import debounce from 'lodash.debounce'
 
 import Screen from 'src/components/Screen'
-import GameController, { GameControls } from '@app-src/GameController'
+import GameController, { GameControls, CELL_SIZE } from '@app-src/GameController'
 
 import styles from './Index.module.css'
 
@@ -53,7 +53,7 @@ const Index: React.FC = () => {
   return (
     <section>
       <div className={styles.size}>
-        <Screen gameState={gameState} gridSize={gameController.gridSize} />
+        <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={CELL_SIZE} />
       </div>
     </section>
   )
