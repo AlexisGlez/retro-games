@@ -17,17 +17,34 @@ const initialGameState = {
 const SNAKE_DIRECTIONS = {
   left: { x: -1, y: 0 },
   right: { x: 1, y: 0 },
-  up: { x: 0, y: 1 },
-  down: { x: 0, y: -1 },
-}
+  up: { x: 0, y: -1 },
+  down: { x: 0, y: 1 },
+} as const
 
 type GameSettings = Partial<{ intialGameState: GameState }>
 
+function getGridSize(): GridSize {
+  if (typeof window === 'undefined') {
+    return { width: 1, height: 1 }
+  }
+
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }
+}
+
 class GameController {
+  public readonly gridSize: GridSize = getGridSize()
+
   private currentGameState: GameState
+  private widthLimit: number
+  private heightLimit: number
 
   public constructor(settings: GameSettings = {}) {
     this.currentGameState = settings.intialGameState ? settings.intialGameState : initialGameState
+    this.widthLimit = this.gridSize.width / this.currentGameState.cellSize
+    this.heightLimit = this.gridSize.height / this.currentGameState.cellSize
   }
 
   public getCurrentGameState(): GameState {
@@ -67,9 +84,9 @@ class GameController {
   private isSnakeOutOfBounds(): boolean {
     return (
       this.currentGameState.snakeHeadPosition.x < 0 ||
-      this.currentGameState.snakeHeadPosition.x > CELL_SIZE ||
+      this.currentGameState.snakeHeadPosition.x > this.widthLimit ||
       this.currentGameState.snakeHeadPosition.y < 0 ||
-      this.currentGameState.snakeHeadPosition.y > CELL_SIZE
+      this.currentGameState.snakeHeadPosition.y > this.heightLimit
     )
   }
 
@@ -106,9 +123,8 @@ class GameController {
     }
 
     do {
-      this.currentGameState.foodLocation.x = Math.floor(Math.random() * CELL_SIZE)
-
-      this.currentGameState.foodLocation.y = Math.floor(Math.random() * CELL_SIZE)
+      this.currentGameState.foodLocation.x = Math.floor(Math.random() * this.widthLimit)
+      this.currentGameState.foodLocation.y = Math.floor(Math.random() * this.heightLimit)
     } while (hasFoodSpawnInSnakePosition())
   }
 
@@ -130,27 +146,28 @@ class GameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public getSnakeDirection(pressedControl: number): SnakePosition {
+  public getSnakeDirection(pressedControl: GameControls): SnakePosition {
     switch (pressedControl) {
-      case 37: {
+      case 'ArrowLeft': {
         return this.isSnakeMovingToTheRight()
           ? this.currentGameState.snakeMovement
           : SNAKE_DIRECTIONS.left
       }
-      case 38: {
+      case 'ArrowDown': {
         return this.isSnakeMovingUp() ? this.currentGameState.snakeMovement : SNAKE_DIRECTIONS.down
       }
-      case 39: {
+      case 'ArrowRight': {
         return this.isSnakeMovingToTheLeft()
           ? this.currentGameState.snakeMovement
           : SNAKE_DIRECTIONS.right
       }
-      case 40: {
+      case 'ArrowUp': {
         return this.isSnakeMovingDown() ? this.currentGameState.snakeMovement : SNAKE_DIRECTIONS.up
       }
+      default: {
+        return this.currentGameState.snakeMovement
+      }
     }
-
-    return this.currentGameState.snakeMovement
   }
 
   private isSnakeMovingToTheRight(): boolean {
@@ -172,6 +189,8 @@ class GameController {
 
 export type GameState = typeof initialGameState
 export type SnakePosition = typeof initialGameState.snakeMovement
+export type GridSize = { width: number; height: number }
+export type GameControls = 'ArrowUp' | 'ArrowRight' | 'ArrowDown' | 'ArrowLeft'
 
 export { CELL_SIZE }
 export default GameController
