@@ -14,7 +14,7 @@ const initialGameState = {
   cellSize: CELL_SIZE,
 }
 
-const SNAKE_DIRECTIONS = {
+const SNAKE_MOVEMENTS = {
   left: { x: -1, y: 0 },
   right: { x: 1, y: 0 },
   up: { x: 0, y: -1 },
@@ -146,23 +146,23 @@ class GameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public getSnakeDirection(pressedControl: GameControls): SnakePosition {
+  public getSnakeMovement(pressedControl: GameControls): SnakePosition {
     switch (pressedControl) {
       case 'ArrowLeft': {
         return this.isSnakeMovingToTheRight()
           ? this.currentGameState.snakeMovement
-          : SNAKE_DIRECTIONS.left
+          : SNAKE_MOVEMENTS.left
       }
       case 'ArrowDown': {
-        return this.isSnakeMovingUp() ? this.currentGameState.snakeMovement : SNAKE_DIRECTIONS.down
+        return this.isSnakeMovingUp() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.down
       }
       case 'ArrowRight': {
         return this.isSnakeMovingToTheLeft()
           ? this.currentGameState.snakeMovement
-          : SNAKE_DIRECTIONS.right
+          : SNAKE_MOVEMENTS.right
       }
       case 'ArrowUp': {
-        return this.isSnakeMovingDown() ? this.currentGameState.snakeMovement : SNAKE_DIRECTIONS.up
+        return this.isSnakeMovingDown() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.up
       }
       default: {
         return this.currentGameState.snakeMovement
@@ -171,19 +171,19 @@ class GameController {
   }
 
   private isSnakeMovingToTheRight(): boolean {
-    return isEqual(this.currentGameState.snakeMovement, SNAKE_DIRECTIONS.right)
+    return isEqual(this.currentGameState.snakeMovement, SNAKE_MOVEMENTS.right)
   }
 
   private isSnakeMovingToTheLeft(): boolean {
-    return isEqual(this.currentGameState.snakeMovement, SNAKE_DIRECTIONS.left)
+    return isEqual(this.currentGameState.snakeMovement, SNAKE_MOVEMENTS.left)
   }
 
   private isSnakeMovingDown(): boolean {
-    return isEqual(this.currentGameState.snakeMovement, SNAKE_DIRECTIONS.down)
+    return isEqual(this.currentGameState.snakeMovement, SNAKE_MOVEMENTS.down)
   }
 
   private isSnakeMovingUp(): boolean {
-    return isEqual(this.currentGameState.snakeMovement, SNAKE_DIRECTIONS.up)
+    return isEqual(this.currentGameState.snakeMovement, SNAKE_MOVEMENTS.up)
   }
 }
 

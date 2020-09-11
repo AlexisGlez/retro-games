@@ -29,7 +29,7 @@ const Index: React.FC = () => {
 
   let snakeMovement = gameState.snakeMovement
   const onKeyDownListener = (event: KeyboardEvent) => {
-    snakeMovement = gameController.getSnakeDirection(event.key as GameControls)
+    snakeMovement = gameController.getSnakeMovement(event.key as GameControls)
   }
 
   React.useEffect(() => {
