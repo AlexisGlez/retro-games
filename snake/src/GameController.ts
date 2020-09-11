@@ -2,18 +2,6 @@ import isEqual from 'lodash.isequal'
 
 const CELL_SIZE = 20
 
-const initialGameState = {
-  snakeHeadPosition: { x: 3, y: 10 },
-  snakeMovement: { x: 1, y: 0 },
-  snakeBody: [
-    { x: 1, y: 10 },
-    { x: 2, y: 10 },
-    { x: 3, y: 10 },
-  ],
-  foodLocation: { x: 7, y: 7 },
-  cellSize: CELL_SIZE,
-}
-
 const SNAKE_MOVEMENTS = {
   left: { x: -1, y: 0 },
   right: { x: 1, y: 0 },
@@ -23,8 +11,12 @@ const SNAKE_MOVEMENTS = {
 
 type GameSettings = Partial<{ intialGameState: GameState }>
 
+function isServer(): boolean {
+  return typeof window === 'undefined'
+}
+
 function getGridSize(): GridSize {
-  if (typeof window === 'undefined') {
+  if (isServer()) {
     return { width: 1, height: 1 }
   }
 
@@ -42,16 +34,117 @@ class GameController {
   private heightLimit: number
 
   public constructor(settings: GameSettings = {}) {
-    this.currentGameState = settings.intialGameState ? settings.intialGameState : initialGameState
-    this.widthLimit = this.gridSize.width / this.currentGameState.cellSize
-    this.heightLimit = this.gridSize.height / this.currentGameState.cellSize
+    this.widthLimit = this.gridSize.width / CELL_SIZE
+    this.heightLimit = this.gridSize.height / CELL_SIZE
+
+    this.currentGameState = settings.intialGameState
+      ? settings.intialGameState
+      : this.generateRandomInitialGame()
+  }
+
+  private generateRandomInitialGame(): GameState {
+    if (isServer()) {
+      return {
+        snakeHeadPosition: { x: 0, y: 0 },
+        snakeMovement: SNAKE_MOVEMENTS.right,
+        snakeBody: [{ x: 0, y: 0 }],
+        foodPosition: { x: 0, y: 0 },
+      }
+    }
+
+    const snakeBody = this.generateRandomSnakePosition()
+
+    const snakeHeadPosition = snakeBody[snakeBody.length - 1]
+    const snakeNeckPosition = snakeBody[snakeBody.length - 2]
+    const snakeMovement = this.generateRandomSnakeMovement(snakeHeadPosition, snakeNeckPosition)
+
+    const foodPosition = this.generateRandomFoodPosition(snakeBody)
+
+    return {
+      snakeHeadPosition,
+      snakeMovement,
+      snakeBody,
+      foodPosition,
+    }
+  }
+
+  private generateRandomSnakePosition(): Array<Coordinate> {
+    const snakeAlignment = Math.random() <= 0.5 ? 'horizontal' : 'vertical'
+
+    let xLimit = this.widthLimit
+    let yLimit = this.heightLimit
+
+    // At the beggining of the game, the snake will have a size of 3.
+    // To ensure the snake starts in a random position that fits in the
+    // screen size, we need to extract 2 of the maximum width or height
+    // depending on the starting snake alignment (vertical/horizontal)
+    if (snakeAlignment === 'horizontal') {
+      xLimit -= 2
+    } else {
+      yLimit -= 2
+    }
+
+    const randomXCoord = Math.floor(Math.random() * xLimit)
+    const randomYCoord = Math.floor(Math.random() * yLimit)
+
+    if (snakeAlignment === 'horizontal') {
+      return [
+        { x: randomXCoord, y: randomYCoord },
+        { x: randomXCoord + 1, y: randomYCoord },
+        { x: randomXCoord + 2, y: randomYCoord },
+      ]
+    }
+
+    return [
+      { x: randomXCoord, y: randomYCoord },
+      { x: randomXCoord, y: randomYCoord + 1 },
+      { x: randomXCoord, y: randomYCoord + 2 },
+    ]
+  }
+
+  private generateRandomSnakeMovement(
+    snakeHeadPosition: Coordinate,
+    snakeNeckPosition: Coordinate,
+  ): Coordinate {
+    const snakeCannotMoveLeft =
+      snakeHeadPosition.x === 0 || snakeHeadPosition.x - 1 === snakeNeckPosition.x
+    const snakeCannotMoveRight =
+      snakeHeadPosition.x === this.widthLimit || snakeHeadPosition.x + 1 === snakeNeckPosition.x
+    const snakeCannotMoveUp =
+      snakeHeadPosition.y === 0 || snakeHeadPosition.y - 1 === snakeNeckPosition.y
+    const snakeCannotMoveDown =
+      snakeHeadPosition.y === this.heightLimit || snakeHeadPosition.y + 1 === snakeNeckPosition.y
+
+    // If the snake cannot start moving somewhere due to its head position,
+    // the movement gets disabled by setting it to -1
+    const possibleMovements: { [key in keyof typeof SNAKE_MOVEMENTS]: number } = {
+      left: snakeCannotMoveLeft ? -1 : 0,
+      right: snakeCannotMoveRight ? -1 : 1,
+      up: snakeCannotMoveUp ? -1 : 2,
+      down: snakeCannotMoveDown ? -1 : 3,
+    }
+    const movementKeys = Object.keys(possibleMovements) as Array<keyof typeof SNAKE_MOVEMENTS>
+
+    let randomSnakeMovement: number
+    let snakeMovementSelected: keyof typeof SNAKE_MOVEMENTS | undefined
+    do {
+      // snake has 4 possible movements: up, down, left, & right
+      randomSnakeMovement = Math.floor(Math.random() * 4)
+
+      // see if the random selected movement is not disabled
+      snakeMovementSelected = movementKeys.find(
+        (key) => possibleMovements[key] === randomSnakeMovement,
+      )
+    } while (!snakeMovementSelected)
+
+    return SNAKE_MOVEMENTS[snakeMovementSelected]
   }
 
   public getCurrentGameState(): GameState {
     return this.currentGameState
   }
 
-  public getNextGameState(nextSnakeMovement: SnakePosition): GameState | null {
+  public getNextGameState(nextSnakeMovement: Coordinate): GameState | null {
     this.currentGameState = {
       ...this.currentGameState,
       snakeMovement: { ...nextSnakeMovement },
@@ -73,7 +166,9 @@ class GameController {
 
     if (this.isSnakeEatingFood()) {
       this.eatFood()
-      this.generateFoodInRandomPosition()
+      this.currentGameState.foodPosition = this.generateRandomFoodPosition(
+        this.currentGameState.snakeBody,
+      )
     }
 
     this.moveSnakeOnePosition()
@@ -92,8 +187,8 @@ class GameController {
 
   private isSnakeEatingFood(): boolean {
     return (
-      this.currentGameState.snakeHeadPosition.x === this.currentGameState.foodLocation.x &&
-      this.currentGameState.snakeHeadPosition.y === this.currentGameState.foodLocation.y
+      this.currentGameState.snakeHeadPosition.x === this.currentGameState.foodPosition.x &&
+      this.currentGameState.snakeHeadPosition.y === this.currentGameState.foodPosition.y
     )
   }
 
@@ -110,22 +205,24 @@ class GameController {
       this.currentGameState.snakeHeadPosition.y + this.currentGameState.snakeMovement.y
   }
 
-  private generateFoodInRandomPosition(): void {
+  private generateRandomFoodPosition(snakeBody: Array<Coordinate>): Coordinate {
     // verify that the food has not spawn in a position where the snake currently is
-    const hasFoodSpawnInSnakePosition = () => {
+    const hasFoodSpawnInSnakePosition = (foodPosition: Coordinate) => {
       return Boolean(
-        this.currentGameState.snakeBody.find(
-          (snakePiece) =>
-            snakePiece.x === this.currentGameState.foodLocation.x &&
-            snakePiece.y === this.currentGameState.foodLocation.y,
+        snakeBody.find(
+          (snakePiece) => snakePiece.x === foodPosition.x && snakePiece.y === foodPosition.y,
         ),
       )
     }
 
+    const foodPosition: Coordinate = { x: 0, y: 0 }
+
     do {
-      this.currentGameState.foodLocation.x = Math.floor(Math.random() * this.widthLimit)
-      this.currentGameState.foodLocation.y = Math.floor(Math.random() * this.heightLimit)
-    } while (hasFoodSpawnInSnakePosition())
+      foodPosition.x = Math.floor(Math.random() * this.widthLimit)
+      foodPosition.y = Math.floor(Math.random() * this.heightLimit)
+    } while (hasFoodSpawnInSnakePosition(foodPosition))
+
+    return foodPosition
   }
 
   private isSnakeEatingItself() {
@@ -146,7 +243,7 @@ class GameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public getSnakeMovement(pressedControl: GameControls): SnakePosition {
+  public getSnakeMovement(pressedControl: GameControls): Coordinate {
     switch (pressedControl) {
       case 'ArrowLeft': {
         return this.isSnakeMovingToTheRight()
@@ -187,9 +284,16 @@ class GameController {
   }
 }
 
-export type GameState = typeof initialGameState
-export type SnakePosition = typeof initialGameState.snakeMovement
+export type Coordinate = { x: number; y: number }
+export type GameState = {
+  snakeHeadPosition: Coordinate
+  snakeMovement: Coordinate
+  snakeBody: Array<Coordinate>
+  foodPosition: Coordinate
+}
+
 export type GridSize = { width: number; height: number }
+
 export type GameControls = 'ArrowUp' | 'ArrowRight' | 'ArrowDown' | 'ArrowLeft'
 
 export { CELL_SIZE }
