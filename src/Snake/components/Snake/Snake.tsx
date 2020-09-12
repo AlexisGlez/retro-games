@@ -1,17 +1,16 @@
 import React from 'react'
 import debounce from 'lodash.debounce'
-import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 import Modal from 'react-responsive-modal'
+import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import Screen from '@app-snake/components/Screen'
-import GameController, { GameControls, CELL_SIZE } from '@app-snake/GameController'
+import GameController, { GameControls } from '@app-snake/GameController'
 
 import styles from './Snake.module.css'
 
 const FRAME_RATE = 10
-const FRAMES_PER_SECOND = 1000 / FRAME_RATE
 
-let gameController = new GameController()
+let gameController: GameController
 let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
@@ -23,7 +22,16 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-const Snake: React.FC = () => {
+type SnakeProps = {
+  cellSize?: number
+  gameSpeed?: number
+}
+
+const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
+  if (!gameController) {
+    gameController = new GameController(cellSize)
+  }
+
   const [gameState, setGameState] = React.useState(gameController.getCurrentGameState())
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
@@ -54,7 +62,7 @@ const Snake: React.FC = () => {
         clearInterval(intervalId)
         setIsModalOpen(true)
       }
-    }, FRAMES_PER_SECOND)
+    }, 1000 / (FRAME_RATE * gameSpeed))
   }
 
   React.useEffect(() => {
@@ -70,7 +78,7 @@ const Snake: React.FC = () => {
 
   function resetGame() {
     clearInterval(intervalId)
-    gameController = new GameController()
+    gameController = new GameController(cellSize)
     const newGame = gameController.getCurrentGameState()
     setGameState(newGame)
     setIsModalOpen(false)
@@ -82,7 +90,7 @@ const Snake: React.FC = () => {
   return (
     <section>
       <div className={styles.size} {...handlers}>
-        <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={CELL_SIZE} />
+        <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
       </div>
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} center>
         <h2 className={styles.header}>Game Over!</h2>

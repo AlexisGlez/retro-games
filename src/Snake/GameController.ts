@@ -1,15 +1,11 @@
 import isEqual from 'lodash.isequal'
 
-const CELL_SIZE = 20
-
 const SNAKE_MOVEMENTS = {
   left: { x: -1, y: 0 },
   right: { x: 1, y: 0 },
   up: { x: 0, y: -1 },
   down: { x: 0, y: 1 },
 } as const
-
-type GameSettings = Partial<{ intialGameState: GameState }>
 
 function isServer(): boolean {
   return typeof window === 'undefined'
@@ -34,9 +30,9 @@ class GameController {
   private heightLimit: number
   private nextSnakeMovement: Coordinate
 
-  public constructor(settings: GameSettings = {}) {
-    this.widthLimit = this.gridSize.width / CELL_SIZE
-    this.heightLimit = this.gridSize.height / CELL_SIZE
+  public constructor(cellSize: number, settings: GameSettings = {}) {
+    this.widthLimit = Math.floor(this.gridSize.width / cellSize)
+    this.heightLimit = Math.floor(this.gridSize.height / cellSize)
 
     this.currentGameState = settings.intialGameState
       ? settings.intialGameState
@@ -291,9 +287,8 @@ export type GameState = {
   foodPosition: Coordinate
 }
 
-export type GridSize = { width: number; height: number }
-
 export type GameControls = 'Up' | 'Right' | 'Down' | 'Left'
+export type GridSize = { width: number; height: number }
+export type GameSettings = Partial<{ intialGameState: GameState }>
 
-export { CELL_SIZE }
 export default GameController
