@@ -245,20 +245,20 @@ class GameController {
 
   public getSnakeMovement(pressedControl: GameControls): Coordinate {
     switch (pressedControl) {
-      case 'ArrowLeft': {
+      case 'Left': {
         return this.isSnakeMovingToTheRight()
           ? this.currentGameState.snakeMovement
           : SNAKE_MOVEMENTS.left
       }
-      case 'ArrowDown': {
+      case 'Down': {
         return this.isSnakeMovingUp() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.down
       }
-      case 'ArrowRight': {
+      case 'Right': {
         return this.isSnakeMovingToTheLeft()
           ? this.currentGameState.snakeMovement
           : SNAKE_MOVEMENTS.right
       }
-      case 'ArrowUp': {
+      case 'Up': {
         return this.isSnakeMovingDown() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.up
       }
       default: {
@@ -294,7 +294,7 @@ export type GameState = {
 
 export type GridSize = { width: number; height: number }
 
-export type GameControls = 'ArrowUp' | 'ArrowRight' | 'ArrowDown' | 'ArrowLeft'
+export type GameControls = 'Up' | 'Right' | 'Down' | 'Left'
 
 export { CELL_SIZE }
 export default GameController
