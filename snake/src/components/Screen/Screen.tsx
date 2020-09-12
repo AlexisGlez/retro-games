@@ -27,7 +27,7 @@ const Screen: React.FC<ScreenProps> = (props) => {
     return () => {
       window.cancelAnimationFrame(animationId)
     }
-  }, [props.gameState])
+  }, [props.gameState, props.cellSize, props.gridSize])
 
   const paintGame = (canvasContext: CanvasRenderingContext2D) => {
     // paint background
