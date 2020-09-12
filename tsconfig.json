@@ -17,8 +17,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@app-components/*": ["src/components/*"],
-      "@app-src/*": ["src/*"]
+      "@app-src/*": ["src/*"],
+      "@app-home/*": ["src/Home/*"],
+      "@app-snake/*": ["src/Snake/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,

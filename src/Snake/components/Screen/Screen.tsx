@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GameState, GridSize } from '@app-src/GameController'
+import { GameState, GridSize } from '@app-snake/GameController'
 
 import styles from './Screen.module.css'
 
