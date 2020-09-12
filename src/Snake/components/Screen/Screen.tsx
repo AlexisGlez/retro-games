@@ -10,16 +10,16 @@ interface ScreenProps {
   cellSize: number
 }
 
-const Screen: React.FC<ScreenProps> = (props) => {
+const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
   React.useEffect(() => {
     const canvas = canvasRef.current!
     const context = canvas.getContext('2d')!
 
-    if (canvas.width !== props.gridSize.width || canvas.height !== props.gridSize.height) {
-      canvas.width = props.gridSize.width
-      canvas.height = props.gridSize.height
+    if (canvas.width !== gridSize.width || canvas.height !== gridSize.height) {
+      canvas.width = gridSize.width
+      canvas.height = gridSize.height
     }
 
     const animationId = requestAnimationFrame(() => paintGame(context))
@@ -27,7 +27,7 @@ const Screen: React.FC<ScreenProps> = (props) => {
     return () => {
       window.cancelAnimationFrame(animationId)
     }
-  }, [props.gameState, props.cellSize, props.gridSize])
+  }, [gameState, cellSize, gridSize])
 
   const paintGame = (canvasContext: CanvasRenderingContext2D) => {
     // paint background
@@ -37,21 +37,16 @@ const Screen: React.FC<ScreenProps> = (props) => {
     // paint food
     canvasContext.fillStyle = '#E66916'
     canvasContext.fillRect(
-      props.gameState.foodPosition.x * props.cellSize,
-      props.gameState.foodPosition.y * props.cellSize,
-      props.cellSize,
-      props.cellSize,
+      gameState.foodPosition.x * cellSize,
+      gameState.foodPosition.y * cellSize,
+      cellSize,
+      cellSize,
     )
 
     // paint snake
     canvasContext.fillStyle = '#C2C2C2'
-    props.gameState.snakeBody.forEach((snakePiece) => {
-      canvasContext.fillRect(
-        snakePiece.x * props.cellSize,
-        snakePiece.y * props.cellSize,
-        props.cellSize,
-        props.cellSize,
-      )
+    gameState.snakeBody.forEach((snakePiece) => {
+      canvasContext.fillRect(snakePiece.x * cellSize, snakePiece.y * cellSize, cellSize, cellSize)
     })
   }
 
