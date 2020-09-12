@@ -155,12 +155,10 @@ class GameController {
     }
 
     if (this.isSnakeOutOfBounds()) {
-      alert('You lose! Snake is out of the screen')
       return null
     }
 
     if (this.isSnakeEatingItself()) {
-      alert('You lose! Snake cannot eat itself!')
       return null
     }
 
