@@ -3,10 +3,10 @@ import debounce from 'lodash.debounce'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 import Modal from 'react-responsive-modal'
 
-import Screen from 'src/components/Screen'
-import GameController, { GameControls, CELL_SIZE } from '@app-src/GameController'
+import Screen from '@app-snake/components/Screen'
+import GameController, { GameControls, CELL_SIZE } from '@app-snake/GameController'
 
-import styles from './Index.module.css'
+import styles from './Snake.module.css'
 
 const FRAME_RATE = 10
 const FRAMES_PER_SECOND = 1000 / FRAME_RATE
@@ -23,7 +23,7 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-const Index: React.FC = () => {
+const Snake: React.FC = () => {
   const [gameState, setGameState] = React.useState(gameController.getCurrentGameState())
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
@@ -100,4 +100,4 @@ const Index: React.FC = () => {
   )
 }
 
-export default Index
+export default Snake
