@@ -4,7 +4,7 @@ import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 import Modal from 'react-responsive-modal'
 
 import Screen from 'src/components/Screen'
-import GameController, { GameControls, CELL_SIZE, Coordinate } from '@app-src/GameController'
+import GameController, { GameControls, CELL_SIZE } from '@app-src/GameController'
 
 import styles from './Index.module.css'
 
@@ -12,12 +12,11 @@ const FRAME_RATE = 10
 const FRAMES_PER_SECOND = 1000 / FRAME_RATE
 
 let gameController = new GameController()
-let snakeMovement: Coordinate
 let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
   onSwiped: (event) => {
-    snakeMovement = gameController.getSnakeMovement(event.dir)
+    gameController.requestNextSnakeMovement(event.dir)
   },
   preventDefaultTouchmoveEvent: true,
   trackTouch: true,
@@ -42,14 +41,12 @@ const Index: React.FC = () => {
     // If use presses the arrow keys, event.key will have the following values:
     // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
     const direction = event.key.replace('Arrow', '')
-    snakeMovement = gameController.getSnakeMovement(direction as GameControls)
+    gameController.requestNextSnakeMovement(direction as GameControls)
   }
 
   function runGame() {
     intervalId = setInterval(() => {
-      const nextGameState = gameController.getNextGameState(
-        snakeMovement ? snakeMovement : gameState.snakeMovement,
-      )
+      const nextGameState = gameController.getNextGameState()
 
       if (nextGameState) {
         setGameState(nextGameState)
@@ -75,7 +72,6 @@ const Index: React.FC = () => {
     clearInterval(intervalId)
     gameController = new GameController()
     const newGame = gameController.getCurrentGameState()
-    snakeMovement = newGame.snakeMovement
     setGameState(newGame)
     setIsModalOpen(false)
     runGame()

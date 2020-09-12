@@ -32,6 +32,7 @@ class GameController {
   private currentGameState: GameState
   private widthLimit: number
   private heightLimit: number
+  private nextSnakeMovement: Coordinate
 
   public constructor(settings: GameSettings = {}) {
     this.widthLimit = this.gridSize.width / CELL_SIZE
@@ -40,6 +41,8 @@ class GameController {
     this.currentGameState = settings.intialGameState
       ? settings.intialGameState
       : this.generateRandomInitialGame()
+
+    this.nextSnakeMovement = this.currentGameState.snakeMovement
   }
 
   private generateRandomInitialGame(): GameState {
@@ -144,13 +147,13 @@ class GameController {
     return this.currentGameState
   }
 
-  public getNextGameState(nextSnakeMovement: Coordinate): GameState | null {
+  public getNextGameState(): GameState | null {
     this.currentGameState = {
       ...this.currentGameState,
-      snakeMovement: { ...nextSnakeMovement },
+      snakeMovement: { ...this.nextSnakeMovement },
       snakeHeadPosition: {
-        x: this.currentGameState.snakeHeadPosition.x + nextSnakeMovement.x,
-        y: this.currentGameState.snakeHeadPosition.y + nextSnakeMovement.y,
+        x: this.currentGameState.snakeHeadPosition.x + this.nextSnakeMovement.x,
+        y: this.currentGameState.snakeHeadPosition.y + this.nextSnakeMovement.y,
       },
     }
 
@@ -241,27 +244,25 @@ class GameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public getSnakeMovement(pressedControl: GameControls): Coordinate {
-    switch (pressedControl) {
-      case 'Left': {
-        return this.isSnakeMovingToTheRight()
-          ? this.currentGameState.snakeMovement
-          : SNAKE_MOVEMENTS.left
-      }
-      case 'Down': {
-        return this.isSnakeMovingUp() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.down
-      }
-      case 'Right': {
-        return this.isSnakeMovingToTheLeft()
-          ? this.currentGameState.snakeMovement
-          : SNAKE_MOVEMENTS.right
-      }
-      case 'Up': {
-        return this.isSnakeMovingDown() ? this.currentGameState.snakeMovement : SNAKE_MOVEMENTS.up
-      }
-      default: {
-        return this.currentGameState.snakeMovement
-      }
+  public requestNextSnakeMovement(pressedControl: GameControls): void {
+    if (pressedControl === 'Left') {
+      this.nextSnakeMovement = this.isSnakeMovingToTheRight()
+        ? this.currentGameState.snakeMovement
+        : SNAKE_MOVEMENTS.left
+    } else if (pressedControl === 'Right') {
+      this.nextSnakeMovement = this.isSnakeMovingToTheLeft()
+        ? this.currentGameState.snakeMovement
+        : SNAKE_MOVEMENTS.right
+    } else if (pressedControl === 'Up') {
+      this.nextSnakeMovement = this.isSnakeMovingDown()
+        ? this.currentGameState.snakeMovement
+        : SNAKE_MOVEMENTS.up
+    } else if (pressedControl === 'Down') {
+      this.nextSnakeMovement = this.isSnakeMovingUp()
+        ? this.currentGameState.snakeMovement
+        : SNAKE_MOVEMENTS.down
+    } else {
+      this.nextSnakeMovement = this.currentGameState.snakeMovement
     }
   }
 
