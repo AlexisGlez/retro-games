@@ -1,10 +1,10 @@
 import React from 'react'
 import debounce from 'lodash.debounce'
-import Modal from 'react-responsive-modal'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import Screen from '@app-snake/components/Screen'
 import GameController, { GameControls } from '@app-snake/GameController'
+import GameOverModal from '@app-shared/components/GameOverModal'
 
 import styles from './Snake.module.css'
 
@@ -33,7 +33,7 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
   }
 
   const [gameState, setGameState] = React.useState(gameController.getCurrentGameState())
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [isGameOver, setIsGameOver] = React.useState(false)
 
   React.useEffect(() => {
     const handleWindowResize = debounce(resetGame, 250)
@@ -60,7 +60,7 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
         setGameState(nextGameState)
       } else {
         clearInterval(intervalId)
-        setIsModalOpen(true)
+        setIsGameOver(true)
       }
     }, 1000 / (FRAME_RATE * gameSpeed))
   }
@@ -81,7 +81,7 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
     gameController = new GameController(cellSize)
     const newGame = gameController.getCurrentGameState()
     setGameState(newGame)
-    setIsModalOpen(false)
+    setIsGameOver(false)
     runGame()
   }
 
@@ -92,18 +92,12 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
       <div className={styles.size} {...handlers}>
         <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
       </div>
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} center>
-        <h2 className={styles.header}>Game Over!</h2>
-        <p className={styles.content}>What do you want to do next?</p>
-        <div className={styles.flex}>
-          <button className={styles.return} onClick={() => setIsModalOpen(false)}>
-            Return to Home
-          </button>
-          <button className={styles.play} onClick={resetGame}>
-            Play Again!
-          </button>
-        </div>
-      </Modal>
+      {isGameOver && (
+        <GameOverModal
+          onReturnHomeClick={() => setIsGameOver(false)}
+          onPlayAgainClick={resetGame}
+        />
+      )}
     </section>
   )
 }

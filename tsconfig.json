@@ -18,6 +18,7 @@
     "noUnusedParameters": true,
     "paths": {
       "@app-src/*": ["src/*"],
+      "@app-shared/*": ["src/shared/*"],
       "@app-home/*": ["src/Home/*"],
       "@app-snake/*": ["src/Snake/*"]
     },

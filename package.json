@@ -7,13 +7,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "emotion-theming": "^10.0.27",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
     "next": "latest",
-    "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-responsive-modal": "^5.1.0",
     "react-swipeable": "^5.5.1"
   },
   "license": "MIT",
