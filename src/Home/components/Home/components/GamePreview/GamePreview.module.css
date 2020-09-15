@@ -1,0 +1,7 @@
+.link:hover img:first-child {
+  opacity: 0;
+}
+
+.link:hover p {
+  opacity: 0.5;
+}
