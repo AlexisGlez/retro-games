@@ -5,7 +5,18 @@ import GamePreview from './components/GamePreview'
 
 import theme from '@app-shared/theme'
 
-const Home: React.FC = () => {
+type HomeProps = {
+  games: {
+    [key: string]: {
+      gameName: string
+      gamePageName: string
+      imageName: string
+      imageAlt: string
+    }
+  }
+}
+
+const Home: React.FC<HomeProps> = ({ games }) => {
   return (
     <Flex justify="center" align="center" h="100vh" direction="column">
       <Heading fontSize="6xl" fontFamily="cursive" fontWeight={theme.fontWeights.extrabold}>
@@ -15,15 +26,14 @@ const Home: React.FC = () => {
         What do you want to play?
       </Text>
       <SimpleGrid p="1rem" columns={{ sm: 1, md: 2, lg: 3 }} spacing="1rem">
-        <GamePreview
-          gameName="Snake"
-          gamePageName="snake"
-          imageName="snake_demo"
-          imageAlt="Snake Game"
-        />
+        {Object.keys(games).map((game) => (
+          <GamePreview key={game} {...games[game]} />
+        ))}
       </SimpleGrid>
     </Flex>
   )
 }
+
+Home.displayName = 'Home'
 
 export default Home

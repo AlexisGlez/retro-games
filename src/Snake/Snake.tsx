@@ -107,4 +107,6 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
   )
 }
 
+Snake.displayName = 'Snake'
+
 export default Snake
