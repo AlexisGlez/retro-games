@@ -1,10 +1,11 @@
 import React from 'react'
 import NextLink from 'next/link'
-import { Text, Image, Link } from '@chakra-ui/core'
+import { Text, Image, Link, IconButton } from '@chakra-ui/core'
 
 import theme from '@app-shared/theme'
 
 import styles from './GamePreview.module.css'
+import GameOptionsContext from '@app-src/shared/contexts/GameOptionsContext'
 
 const gameBorder = 8
 const imageMaxHeight = 300
@@ -22,6 +23,18 @@ const GamePreview: React.FC<GamePreviewProps> = ({
   imageName,
   imageAlt,
 }) => {
+  const gameOptions = React.useContext(GameOptionsContext)
+
+  const onSettingsClick = (event: React.MouseEvent<any, MouseEvent>) => {
+    event.stopPropagation()
+    gameOptions.onGameSettingsClick!(gameName)
+  }
+
+  const onHelpClick = (event: React.MouseEvent<any, MouseEvent>) => {
+    event.stopPropagation()
+    gameOptions.onGameHelpClick!(gameName)
+  }
+
   return (
     <NextLink href={`/${gamePageName}`}>
       <Link
@@ -44,6 +57,22 @@ const GamePreview: React.FC<GamePreviewProps> = ({
           alt={`${imageAlt} Demo`}
           maxHeight={imageMaxHeight}
           borderRadius={gameBorder}
+        />
+        <IconButton
+          aria-label={`${gameName} Game Settings`}
+          icon="settings"
+          position="absolute"
+          left="1rem"
+          top="1rem"
+          onClick={onSettingsClick}
+        />
+        <IconButton
+          aria-label={`${gameName} Game Help`}
+          icon="question"
+          position="absolute"
+          right="1rem"
+          top="1rem"
+          onClick={onHelpClick}
         />
         <Text
           position="absolute"

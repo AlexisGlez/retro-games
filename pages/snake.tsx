@@ -1,3 +1,3 @@
-import Snake from '@app-snake/components/Snake'
+import Snake from '@app-snake/Snake'
 
 export default Snake
