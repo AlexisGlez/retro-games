@@ -1,5 +1,6 @@
 import React from 'react'
 import debounce from 'lodash.debounce'
+import { useRouter } from 'next/router'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import Screen from '@app-snake/components/Screen'
@@ -10,12 +11,12 @@ import styles from './Snake.module.css'
 
 const FRAME_RATE = 10
 
-let gameController: GameController
+let gameController: GameController | undefined
 let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
   onSwiped: (event) => {
-    gameController.requestNextSnakeMovement(event.dir)
+    gameController!.requestNextSnakeMovement(event.dir)
   },
   preventDefaultTouchmoveEvent: true,
   trackTouch: true,
@@ -43,18 +44,30 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
     return () => {
       window.removeEventListener('resize', handleWindowResize)
     }
-  })
+  }, [])
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', onKeyDownListener)
+
+    runGame()
+
+    return () => {
+      clearInterval(intervalId)
+      gameController = undefined
+      document.removeEventListener('keydown', onKeyDownListener)
+    }
+  }, [])
 
   const onKeyDownListener = (event: KeyboardEvent) => {
     // If use presses the arrow keys, event.key will have the following values:
     // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
     const direction = event.key.replace('Arrow', '')
-    gameController.requestNextSnakeMovement(direction as GameControls)
+    gameController!.requestNextSnakeMovement(direction as GameControls)
   }
 
   function runGame() {
     intervalId = setInterval(() => {
-      const nextGameState = gameController.getNextGameState()
+      const nextGameState = gameController!.getNextGameState()
 
       if (nextGameState) {
         setGameState(nextGameState)
@@ -65,17 +78,6 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
     }, 1000 / (FRAME_RATE * gameSpeed))
   }
 
-  React.useEffect(() => {
-    document.addEventListener('keydown', onKeyDownListener)
-
-    runGame()
-
-    return () => {
-      clearInterval(intervalId)
-      document.removeEventListener('keydown', onKeyDownListener)
-    }
-  }, [])
-
   function resetGame() {
     clearInterval(intervalId)
     gameController = new GameController(cellSize)
@@ -83,6 +85,12 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
     setGameState(newGame)
     setIsGameOver(false)
     runGame()
+  }
+
+  const router = useRouter()
+  function returnToHome() {
+    setIsGameOver(false)
+    router.back()
   }
 
   const handlers = useSwipeable(swiperConfig)
@@ -93,10 +101,7 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
         <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
       </div>
       {isGameOver && (
-        <GameOverModal
-          onReturnHomeClick={() => setIsGameOver(false)}
-          onPlayAgainClick={resetGame}
-        />
+        <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
       )}
     </section>
   )

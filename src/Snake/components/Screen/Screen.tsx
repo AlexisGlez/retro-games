@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { GameState, GridSize } from '@app-snake/GameController'
+import theme from '@app-shared/theme'
 
 import styles from './Screen.module.css'
 
@@ -31,11 +32,11 @@ const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
 
   const paintGame = (canvasContext: CanvasRenderingContext2D) => {
     // paint background
-    canvasContext.fillStyle = '#231F20'
+    canvasContext.fillStyle = theme.colors.gray[800]
     canvasContext.fillRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height)
 
     // paint food
-    canvasContext.fillStyle = '#E66916'
+    canvasContext.fillStyle = theme.colors.red[400]
     canvasContext.fillRect(
       gameState.foodPosition.x * cellSize,
       gameState.foodPosition.y * cellSize,
@@ -44,7 +45,7 @@ const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
     )
 
     // paint snake
-    canvasContext.fillStyle = '#C2C2C2'
+    canvasContext.fillStyle = theme.colors.whiteAlpha[900]
     gameState.snakeBody.forEach((snakePiece) => {
       canvasContext.fillRect(snakePiece.x * cellSize, snakePiece.y * cellSize, cellSize, cellSize)
     })
