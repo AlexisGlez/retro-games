@@ -6,17 +6,10 @@ import {
   ModalHeader,
   ModalBody,
   Button,
-  FormControl,
-  FormLabel,
-  Select,
-  FormHelperText,
   Flex,
-  NumberInput,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInputField,
-  NumberInputStepper,
 } from '@chakra-ui/core'
+
+import GameSetting from './GameSetting'
 
 export type GameSettings = {
   propertyName: string
@@ -63,6 +56,13 @@ const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
 
   const [formValues, setFormValues] = React.useState<{ [key: string]: any }>(initialFormValues)
 
+  const onFormValueChange = (propertyName: string, value: any) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      [propertyName]: value,
+    }))
+  }
+
   const onSettingsChanged = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -83,8 +83,6 @@ const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
     onClose()
   }
 
-  // TODO: REFACTOR THE SHIT BELOW
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="sm" isCentered>
       <ModalOverlay />
@@ -94,77 +92,13 @@ const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
         </ModalHeader>
         <ModalBody fontSize="lg">
           <form onSubmit={onSettingsChanged}>
-            {gameSettings.map((gameSetting) => {
-              if (gameSetting.type !== 'number') {
-                return null
-              }
-
-              if (gameSetting.max / gameSetting.step < 10) {
-                const options: Array<React.ReactNode> = []
-
-                for (let i = gameSetting.min; i <= gameSetting.max; i += gameSetting.step) {
-                  options.push(
-                    <option key={i} value={i}>
-                      {i}
-                    </option>,
-                  )
-                }
-
-                return (
-                  <FormControl key={gameSetting.propertyName} mb="1rem">
-                    <FormLabel htmlFor={gameSetting.propertyName}>
-                      {gameSetting.displayName}
-                    </FormLabel>
-                    <Select
-                      id={gameSetting.propertyName}
-                      aria-describedby={`${gameSetting.propertyName}-helper-text`}
-                      onChange={(e) => {
-                        setFormValues((prevState) => ({
-                          ...prevState,
-                          [gameSetting.propertyName]: Number(e.target.value),
-                        }))
-                      }}
-                      defaultValue={gameSetting.currentValue}
-                    >
-                      {options}
-                    </Select>
-                    <FormHelperText id={`${gameSetting.propertyName}-helper-text`}>
-                      {gameSetting.helperText}
-                    </FormHelperText>
-                  </FormControl>
-                )
-              }
-
-              return (
-                <FormControl key={gameSetting.propertyName} mb="1rem">
-                  <FormLabel htmlFor={gameSetting.propertyName}>
-                    {gameSetting.displayName}
-                  </FormLabel>
-                  <NumberInput
-                    step={gameSetting.step}
-                    min={gameSetting.min}
-                    max={gameSetting.max}
-                    clampValueOnBlur={false}
-                    defaultValue={gameSetting.currentValue}
-                    onChange={(value) => {
-                      setFormValues((prevState) => ({
-                        ...prevState,
-                        [gameSetting.propertyName]: Number(value),
-                      }))
-                    }}
-                  >
-                    <NumberInputField id={gameSetting.propertyName} type="number" />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormHelperText id={`${gameSetting.propertyName}-helper-text`}>
-                    {gameSetting.helperText}
-                  </FormHelperText>
-                </FormControl>
-              )
-            })}
+            {gameSettings.map((gameSetting) => (
+              <GameSetting
+                key={gameSetting.propertyName}
+                {...gameSetting}
+                onFormValueChange={onFormValueChange}
+              />
+            ))}
             <Flex p="1rem" justifyContent="space-around">
               <Button variantColor="green" type="submit">
                 Done!
