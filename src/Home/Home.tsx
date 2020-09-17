@@ -19,10 +19,15 @@ type HomeProps = {
 const Home: React.FC<HomeProps> = ({ games }) => {
   return (
     <Flex justify="center" align="center" h="100vh" direction="column">
-      <Heading fontSize="6xl" fontFamily="cursive" fontWeight={theme.fontWeights.extrabold}>
+      <Heading
+        fontSize="6xl"
+        fontFamily="cursive"
+        textAlign="center"
+        fontWeight={theme.fontWeights.extrabold}
+      >
         Retro Games
       </Heading>
-      <Text my="1rem" fontSize="3xl">
+      <Text my="1rem" fontSize="3xl" textAlign="center">
         What do you want to play?
       </Text>
       <SimpleGrid p="1rem" columns={{ sm: 1, md: 2, lg: 3 }} spacing="1rem">

@@ -62,7 +62,7 @@ const GamePreview: React.FC<GamePreviewProps> = ({
           aria-label={`${gameName} Game Settings`}
           icon="settings"
           position="absolute"
-          left="1rem"
+          right="1rem"
           top="1rem"
           onClick={onSettingsClick}
         />
@@ -71,7 +71,7 @@ const GamePreview: React.FC<GamePreviewProps> = ({
           icon="question"
           position="absolute"
           right="1rem"
-          top="1rem"
+          top="4rem"
           onClick={onHelpClick}
         />
         <Text
