@@ -14,6 +14,7 @@ type ChildrenOnlyProp = { children: React.ReactNode }
 
 // TODO: Move pagesProps & getGamesSettings to config file.
 // TODO: Add Pages Names as constants and use those constants as the keys for the configs
+// TODO: Move type definitions to index.d.ts
 
 const pagesProps = {
   Home: {
