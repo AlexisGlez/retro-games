@@ -8,6 +8,7 @@ import GameController, { GameControls } from '@app-snake/GameController'
 import GameOverModal from '@app-shared/components/GameOverModal'
 
 import styles from './Snake.module.css'
+import constants from '@app-src/shared/constants'
 
 const FRAME_RATE = 10
 
@@ -107,6 +108,6 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
   )
 }
 
-Snake.displayName = 'Snake'
+Snake.displayName = constants.pages.snake
 
 export default Snake
