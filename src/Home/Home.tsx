@@ -4,6 +4,7 @@ import { Flex, Heading, Text, SimpleGrid } from '@chakra-ui/core'
 import GamePreview from './components/GamePreview'
 
 import theme from '@app-shared/theme'
+import constants from '@app-src/shared/constants'
 
 type HomeProps = {
   games: {
@@ -39,6 +40,6 @@ const Home: React.FC<HomeProps> = ({ games }) => {
   )
 }
 
-Home.displayName = 'Home'
+Home.displayName = constants.pages.home
 
 export default Home

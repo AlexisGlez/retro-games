@@ -4,63 +4,21 @@ import { ThemeProvider, CSSReset, ColorModeProvider, useDisclosure } from '@chak
 
 import theme from '@app-shared/theme'
 import GameOptionsContext from '@app-shared/contexts/GameOptionsContext'
+
 import GameSettingsModal, {
-  GameSettings,
   GameSettingsUpdates,
   Game,
+  GameSettings,
 } from './components/GameSettingsModal'
+import { pagesConfig, gamesSettings } from './config'
 
 type ChildrenOnlyProp = { children: React.ReactNode }
 
-// TODO: Move pagesProps & getGamesSettings to config file.
-// TODO: Add Pages Names as constants and use those constants as the keys for the configs
 // TODO: Move type definitions to index.d.ts
 
-const pagesProps = {
-  Home: {
-    games: {
-      snake: {
-        gameName: 'Snake',
-        gamePageName: 'snake',
-        imageName: 'snake_demo',
-        imageAlt: 'Snake Game',
-      },
-    },
-  },
-  Snake: {
-    cellSize: 20,
-    gameSpeed: 1,
-  },
-}
-
-function getGamesSettings(): { [key: string]: Array<GameSettings> } {
-  return {
-    Snake: [
-      {
-        propertyName: 'cellSize',
-        displayName: 'Cell Size',
-        type: 'number',
-        helperText: 'The size of each cell in the board, the food, and snake',
-        currentValue: pagesProps.Snake.cellSize,
-        step: 1,
-        min: 1,
-        max: 100,
-      },
-      {
-        propertyName: 'gameSpeed',
-        displayName: 'Game Speed',
-        helperText: "The snake's speed (use with caution)",
-        type: 'number',
-        currentValue: pagesProps.Snake.gameSpeed,
-        step: 1,
-        min: 1,
-        max: 9,
-      },
-    ],
-  }
-}
-
 function App({ Component, pageProps }: AppProps) {
+  const [currentPagesConfig, setCurrentPagesConfig] = React.useState(pagesConfig)
+  const [currentGamesSettings, setCurrentGamesSettings] = React.useState(gamesSettings)
   const gameSettingsModal = useDisclosure(false)
   const [currentGame, setCurrentGame] = React.useState<Game>({
     gameName: '',
@@ -71,7 +29,7 @@ function App({ Component, pageProps }: AppProps) {
     onGameSettingsClick: (gameName: string) => {
       setCurrentGame({
         gameName,
-        gameSettings: getGamesSettings()[gameName],
+        gameSettings: currentGamesSettings[gameName] as Array<GameSettings>,
       })
 
       gameSettingsModal.onOpen()
@@ -82,10 +40,26 @@ function App({ Component, pageProps }: AppProps) {
   }
 
   const onGameSettingsChanged = (gameSettings: GameSettingsUpdates) => {
-    const game = pagesProps[gameSettings.gameName as keyof typeof pagesProps] as any
-    gameSettings.gameSettings.forEach((setting) => {
-      game[setting.propertyName] = setting.newValue
-    })
+    const newSettings = gameSettings.gameSettings.reduce((acc, curr) => {
+      acc[curr.propertyName] = curr.newValue
+      return acc
+    }, {} as any)
+
+    setCurrentPagesConfig((prevState) => ({
+      ...prevState,
+      [gameSettings.gameName]: {
+        ...prevState[gameSettings.gameName],
+        ...newSettings,
+      },
+    }))
+
+    setCurrentGamesSettings((prevState) => ({
+      ...prevState,
+      [gameSettings.gameName]: prevState[gameSettings.gameName].map((settings) => ({
+        ...settings,
+        currentValue: newSettings[settings.propertyName],
+      })),
+    }))
   }
 
   const Wrappers = {
@@ -98,7 +72,7 @@ function App({ Component, pageProps }: AppProps) {
     Wrappers[Component.displayName as keyof typeof Wrappers] ||
     (({ children }: ChildrenOnlyProp) => <>{children}</>)
 
-  const additionalProps = pagesProps[Component.displayName as keyof typeof pagesProps] || {}
+  const additionalProps = currentPagesConfig[Component.displayName || ''] || {}
 
   return (
     <ThemeProvider theme={theme}>
