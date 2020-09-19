@@ -1,6 +1,7 @@
 /// <reference path="./GameController.d.ts" />
 
 import isEqual from 'lodash.isequal'
+import { isServer, getGridSize } from '@app-shared/utils'
 
 const SNAKE_MOVEMENTS = {
   left: { x: -1, y: 0 },
@@ -8,21 +9,6 @@ const SNAKE_MOVEMENTS = {
   up: { x: 0, y: -1 },
   down: { x: 0, y: 1 },
 } as const
-
-function isServer(): boolean {
-  return typeof window === 'undefined'
-}
-
-function getGridSize(): GridSize {
-  if (isServer()) {
-    return { width: 1, height: 1 }
-  }
-
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  }
-}
 
 export class GameController {
   public readonly gridSize: GridSize = getGridSize()

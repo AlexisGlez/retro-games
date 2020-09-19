@@ -5,7 +5,7 @@ import NextLink from 'next/link'
 import { Text, Image, Link, IconButton } from '@chakra-ui/core'
 
 import { theme } from '@app-shared/theme'
-import { GameOptionsContext } from '@app-src/shared/contexts/GameOptionsContext'
+import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 
 import styles from './GamePreview.module.css'
 
