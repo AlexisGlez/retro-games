@@ -2,10 +2,10 @@ import React from 'react'
 import NextLink from 'next/link'
 import { Text, Image, Link, IconButton } from '@chakra-ui/core'
 
-import theme from '@app-shared/theme'
+import { theme } from '@app-shared/theme'
 
 import styles from './GamePreview.module.css'
-import GameOptionsContext from '@app-src/shared/contexts/GameOptionsContext'
+import { GameOptionsContext } from '@app-src/shared/contexts/GameOptionsContext'
 
 const gameBorder = 8
 const imageMaxHeight = 300
@@ -17,7 +17,7 @@ interface GamePreviewProps {
   imageAlt: string
 }
 
-const GamePreview: React.FC<GamePreviewProps> = ({
+export const GamePreview: React.FC<GamePreviewProps> = ({
   gameName,
   gamePageName,
   imageName,
@@ -87,5 +87,3 @@ const GamePreview: React.FC<GamePreviewProps> = ({
     </NextLink>
   )
 }
-
-export default GamePreview

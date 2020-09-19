@@ -1,3 +1,1 @@
-import Snake from './Snake'
-
-export default Snake
+export * from './Snake'

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { GameState, GridSize } from '@app-snake/GameController'
-import theme from '@app-shared/theme'
+import { theme } from '@app-shared/theme'
 
 import styles from './Screen.module.css'
 
@@ -11,7 +11,7 @@ interface ScreenProps {
   cellSize: number
 }
 
-const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
+export const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
   React.useEffect(() => {
@@ -53,5 +53,3 @@ const Screen: React.FC<ScreenProps> = ({ cellSize, gameState, gridSize }) => {
 
   return <canvas ref={canvasRef} className={styles.screen} />
 }
-
-export default Screen

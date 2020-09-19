@@ -1,3 +1,3 @@
-import Home from '@app-home/Home'
+import { Home } from '@app-home/Home'
 
 export default Home

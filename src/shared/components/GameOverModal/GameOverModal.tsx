@@ -14,7 +14,10 @@ interface GameOverModalProps {
   onPlayAgainClick: () => void
 }
 
-const GameOverModal: React.FC<GameOverModalProps> = ({ onReturnHomeClick, onPlayAgainClick }) => {
+export const GameOverModal: React.FC<GameOverModalProps> = ({
+  onReturnHomeClick,
+  onPlayAgainClick,
+}) => {
   const { isOpen, onClose } = useDisclosure(true)
 
   const returnHome = () => {
@@ -49,5 +52,3 @@ const GameOverModal: React.FC<GameOverModalProps> = ({ onReturnHomeClick, onPlay
     </Modal>
   )
 }
-
-export default GameOverModal

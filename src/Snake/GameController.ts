@@ -11,6 +11,18 @@ function isServer(): boolean {
   return typeof window === 'undefined'
 }
 
+export type Coordinate = { x: number; y: number }
+export type GameState = {
+  snakeHeadPosition: Coordinate
+  snakeMovement: Coordinate
+  snakeBody: Array<Coordinate>
+  foodPosition: Coordinate
+}
+
+export type GameControls = 'Up' | 'Right' | 'Down' | 'Left'
+export type GridSize = { width: number; height: number }
+export type GameSettings = Partial<{ intialGameState: GameState }>
+
 function getGridSize(): GridSize {
   if (isServer()) {
     return { width: 1, height: 1 }
@@ -22,7 +34,7 @@ function getGridSize(): GridSize {
   }
 }
 
-class GameController {
+export class GameController {
   public readonly gridSize: GridSize = getGridSize()
 
   private currentGameState: GameState
@@ -278,17 +290,3 @@ class GameController {
     return isEqual(this.currentGameState.snakeMovement, SNAKE_MOVEMENTS.up)
   }
 }
-
-export type Coordinate = { x: number; y: number }
-export type GameState = {
-  snakeHeadPosition: Coordinate
-  snakeMovement: Coordinate
-  snakeBody: Array<Coordinate>
-  foodPosition: Coordinate
-}
-
-export type GameControls = 'Up' | 'Right' | 'Down' | 'Left'
-export type GridSize = { width: number; height: number }
-export type GameSettings = Partial<{ intialGameState: GameState }>
-
-export default GameController

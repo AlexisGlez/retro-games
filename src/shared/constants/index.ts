@@ -1,1 +1,1 @@
-export { default } from './constants'
+export * as constants from './constants'

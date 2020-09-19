@@ -2,10 +2,11 @@ import React from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider, CSSReset, ColorModeProvider, useDisclosure } from '@chakra-ui/core'
 
-import theme from '@app-shared/theme'
-import GameOptionsContext from '@app-shared/contexts/GameOptionsContext'
+import { theme } from '@app-shared/theme'
+import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 
-import GameSettingsModal, {
+import {
+  GameSettingsModal,
   GameSettingsUpdates,
   Game,
   GameSettings,
@@ -16,7 +17,7 @@ type ChildrenOnlyProp = { children: React.ReactNode }
 
 // TODO: Move type definitions to index.d.ts
 
-function App({ Component, pageProps }: AppProps) {
+export function App({ Component, pageProps }: AppProps) {
   const [currentPagesConfig, setCurrentPagesConfig] = React.useState(pagesConfig)
   const [currentGamesSettings, setCurrentGamesSettings] = React.useState(gamesSettings)
   const gameSettingsModal = useDisclosure(false)
@@ -91,5 +92,3 @@ function App({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   )
 }
-
-export default App

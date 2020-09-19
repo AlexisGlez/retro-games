@@ -3,12 +3,13 @@ import debounce from 'lodash.debounce'
 import { useRouter } from 'next/router'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
-import Screen from '@app-snake/components/Screen'
-import GameController, { GameControls } from '@app-snake/GameController'
-import GameOverModal from '@app-shared/components/GameOverModal'
+import { GameOverModal } from '@app-shared/components/GameOverModal'
+import { constants } from '@app-src/shared/constants'
+
+import { Screen } from './components/Screen'
+import { GameController, GameControls } from './GameController'
 
 import styles from './Snake.module.css'
-import constants from '@app-src/shared/constants'
 
 const FRAME_RATE = 10
 
@@ -29,7 +30,7 @@ type SnakeProps = {
   gameSpeed?: number
 }
 
-const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
+export const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
   if (!gameController) {
     gameController = new GameController(cellSize)
   }
@@ -109,5 +110,3 @@ const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
 }
 
 Snake.displayName = constants.pages.snake
-
-export default Snake

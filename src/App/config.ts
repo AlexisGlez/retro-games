@@ -1,6 +1,6 @@
-import constants from '@app-src/shared/constants'
+import { constants } from '@app-src/shared/constants'
 
-const pagesConfig = {
+export const pagesConfig = {
   [constants.pages.home]: {
     games: {
       snake: {
@@ -17,7 +17,7 @@ const pagesConfig = {
   },
 }
 
-const gamesSettings = {
+export const gamesSettings = {
   [constants.pages.snake]: [
     {
       propertyName: 'cellSize',
@@ -41,5 +41,3 @@ const gamesSettings = {
     },
   ],
 }
-
-export { pagesConfig, gamesSettings }

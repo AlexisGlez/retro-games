@@ -26,7 +26,7 @@ type GameSettingProps = GameSetting & {
   onFormValueChange: (propertyName: string, value: any) => void
 }
 
-const GameSetting: React.FC<GameSettingProps> = ({
+export const GameSetting: React.FC<GameSettingProps> = ({
   propertyName,
   displayName,
   helperText,
@@ -95,5 +95,3 @@ const GameSetting: React.FC<GameSettingProps> = ({
     </FormControl>
   )
 }
-
-export default GameSetting
