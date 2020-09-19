@@ -2,7 +2,7 @@
 
 import React from 'react'
 import NextLink from 'next/link'
-import { Text, Image, Link, IconButton } from '@chakra-ui/core'
+import { Text, Image, Link, IconButton, DarkMode } from '@chakra-ui/core'
 
 import { theme } from '@app-shared/theme'
 import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
@@ -53,22 +53,26 @@ export const GamePreview: React.FC<GamePreview> = ({
           maxHeight={imageMaxHeight}
           borderRadius={gameBorder}
         />
-        <IconButton
-          aria-label={`${gameName} Game Settings`}
-          icon="settings"
-          position="absolute"
-          right="1rem"
-          top="1rem"
-          onClick={onSettingsClick}
-        />
-        <IconButton
-          aria-label={`${gameName} Game Help`}
-          icon="question"
-          position="absolute"
-          right="1rem"
-          top="4rem"
-          onClick={onHelpClick}
-        />
+        <DarkMode>
+          <IconButton
+            aria-label={`${gameName} Game Settings`}
+            icon="settings"
+            position="absolute"
+            right="1rem"
+            top="1rem"
+            onClick={onSettingsClick}
+          />
+        </DarkMode>
+        <DarkMode>
+          <IconButton
+            aria-label={`${gameName} Game Help`}
+            icon="question"
+            position="absolute"
+            right="1rem"
+            top="4rem"
+            onClick={onHelpClick}
+          />
+        </DarkMode>
         <Text
           position="absolute"
           right="1rem"
