@@ -1,3 +1,5 @@
+/// <reference path="./GameController.d.ts" />
+
 import isEqual from 'lodash.isequal'
 
 const SNAKE_MOVEMENTS = {
@@ -10,18 +12,6 @@ const SNAKE_MOVEMENTS = {
 function isServer(): boolean {
   return typeof window === 'undefined'
 }
-
-export type Coordinate = { x: number; y: number }
-export type GameState = {
-  snakeHeadPosition: Coordinate
-  snakeMovement: Coordinate
-  snakeBody: Array<Coordinate>
-  foodPosition: Coordinate
-}
-
-export type GameControls = 'Up' | 'Right' | 'Down' | 'Left'
-export type GridSize = { width: number; height: number }
-export type GameSettings = Partial<{ intialGameState: GameState }>
 
 function getGridSize(): GridSize {
   if (isServer()) {
@@ -37,12 +27,12 @@ function getGridSize(): GridSize {
 export class GameController {
   public readonly gridSize: GridSize = getGridSize()
 
-  private currentGameState: GameState
+  private currentGameState: SnakeGame.State
   private widthLimit: number
   private heightLimit: number
   private nextSnakeMovement: Coordinate
 
-  public constructor(cellSize: number, settings: GameSettings = {}) {
+  public constructor(cellSize: number, settings: SnakeGame.Settings = {}) {
     this.widthLimit = Math.floor(this.gridSize.width / cellSize)
     this.heightLimit = Math.floor(this.gridSize.height / cellSize)
 
@@ -53,7 +43,7 @@ export class GameController {
     this.nextSnakeMovement = this.currentGameState.snakeMovement
   }
 
-  private generateRandomInitialGame(): GameState {
+  private generateRandomInitialGame(): SnakeGame.State {
     if (isServer()) {
       return {
         snakeHeadPosition: { x: 0, y: 0 },
@@ -151,11 +141,11 @@ export class GameController {
     return SNAKE_MOVEMENTS[snakeMovementSelected]
   }
 
-  public getCurrentGameState(): GameState {
+  public getCurrentGameState(): SnakeGame.State {
     return this.currentGameState
   }
 
-  public getNextGameState(): GameState | null {
+  public getNextGameState(): SnakeGame.State | null {
     this.currentGameState = {
       ...this.currentGameState,
       snakeMovement: { ...this.nextSnakeMovement },
@@ -252,7 +242,7 @@ export class GameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public requestNextSnakeMovement(pressedControl: GameControls): void {
+  public requestNextSnakeMovement(pressedControl: SnakeGame.Controls): void {
     if (pressedControl === 'Left') {
       this.nextSnakeMovement = this.isSnakeMovingToTheRight()
         ? this.currentGameState.snakeMovement

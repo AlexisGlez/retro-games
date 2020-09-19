@@ -1,23 +1,18 @@
+/// <reference path="./GamePreview.d.ts" />
+
 import React from 'react'
 import NextLink from 'next/link'
 import { Text, Image, Link, IconButton } from '@chakra-ui/core'
 
 import { theme } from '@app-shared/theme'
+import { GameOptionsContext } from '@app-src/shared/contexts/GameOptionsContext'
 
 import styles from './GamePreview.module.css'
-import { GameOptionsContext } from '@app-src/shared/contexts/GameOptionsContext'
 
 const gameBorder = 8
 const imageMaxHeight = 300
 
-interface GamePreviewProps {
-  gameName: string
-  gamePageName: string
-  imageName: string
-  imageAlt: string
-}
-
-export const GamePreview: React.FC<GamePreviewProps> = ({
+export const GamePreview: React.FC<GamePreview> = ({
   gameName,
   gamePageName,
   imageName,

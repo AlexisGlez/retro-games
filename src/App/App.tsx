@@ -1,3 +1,5 @@
+/// <reference path="./App.d.ts" />
+
 import React from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider, CSSReset, ColorModeProvider, useDisclosure } from '@chakra-ui/core'
@@ -5,23 +7,14 @@ import { ThemeProvider, CSSReset, ColorModeProvider, useDisclosure } from '@chak
 import { theme } from '@app-shared/theme'
 import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 
-import {
-  GameSettingsModal,
-  GameSettingsUpdates,
-  Game,
-  GameSettings,
-} from './components/GameSettingsModal'
+import { GameSettingsModal } from './components/GameSettingsModal'
 import { pagesConfig, gamesSettings } from './config'
-
-type ChildrenOnlyProp = { children: React.ReactNode }
-
-// TODO: Move type definitions to index.d.ts
 
 export function App({ Component, pageProps }: AppProps) {
   const [currentPagesConfig, setCurrentPagesConfig] = React.useState(pagesConfig)
   const [currentGamesSettings, setCurrentGamesSettings] = React.useState(gamesSettings)
   const gameSettingsModal = useDisclosure(false)
-  const [currentGame, setCurrentGame] = React.useState<Game>({
+  const [currentGame, setCurrentGame] = React.useState<GameSettingsModal.Game>({
     gameName: '',
     gameSettings: [],
   })
@@ -30,7 +23,7 @@ export function App({ Component, pageProps }: AppProps) {
     onGameSettingsClick: (gameName: string) => {
       setCurrentGame({
         gameName,
-        gameSettings: currentGamesSettings[gameName] as Array<GameSettings>,
+        gameSettings: currentGamesSettings[gameName as GameNames] as Array<GameSetting>,
       })
 
       gameSettingsModal.onOpen()
@@ -40,7 +33,7 @@ export function App({ Component, pageProps }: AppProps) {
     },
   }
 
-  const onGameSettingsChanged = (gameSettings: GameSettingsUpdates) => {
+  const onGameSettingsChanged = (gameSettings: GameSettingsModal.GameSettingsUpdates) => {
     const newSettings = gameSettings.gameSettings.reduce((acc, curr) => {
       acc[curr.propertyName] = curr.newValue
       return acc
@@ -49,14 +42,14 @@ export function App({ Component, pageProps }: AppProps) {
     setCurrentPagesConfig((prevState) => ({
       ...prevState,
       [gameSettings.gameName]: {
-        ...prevState[gameSettings.gameName],
+        ...prevState[gameSettings.gameName as GameNames],
         ...newSettings,
       },
     }))
 
     setCurrentGamesSettings((prevState) => ({
       ...prevState,
-      [gameSettings.gameName]: prevState[gameSettings.gameName].map((settings) => ({
+      [gameSettings.gameName]: prevState[gameSettings.gameName as GameNames].map((settings) => ({
         ...settings,
         currentValue: newSettings[settings.propertyName],
       })),
@@ -73,7 +66,7 @@ export function App({ Component, pageProps }: AppProps) {
     Wrappers[Component.displayName as keyof typeof Wrappers] ||
     (({ children }: ChildrenOnlyProp) => <>{children}</>)
 
-  const additionalProps = currentPagesConfig[Component.displayName || ''] || {}
+  const additionalProps = currentPagesConfig[Component.displayName as PageNames] || {}
 
   return (
     <ThemeProvider theme={theme}>

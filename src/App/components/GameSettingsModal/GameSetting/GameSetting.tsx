@@ -1,4 +1,7 @@
+/// <reference path="./GameSetting.d.ts" />
+
 import React from 'react'
+
 import {
   FormControl,
   FormLabel,
@@ -10,17 +13,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from '@chakra-ui/core'
-
-type GameSetting = {
-  propertyName: string
-  displayName: string
-  helperText: string
-  type: string
-  currentValue: number
-  step: number
-  min: number
-  max: number
-}
 
 type GameSettingProps = GameSetting & {
   onFormValueChange: (propertyName: string, value: any) => void

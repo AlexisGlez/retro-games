@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { GameState, GridSize } from '@app-snake/GameController'
 import { theme } from '@app-shared/theme'
 
 import styles from './Screen.module.css'
 
-interface ScreenProps {
-  gameState: GameState
+type ScreenProps = {
+  gameState: SnakeGame.State
   gridSize: GridSize
   cellSize: number
 }
