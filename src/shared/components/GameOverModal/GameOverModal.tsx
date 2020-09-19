@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/core'
 
-interface GameOverModalProps {
+type GameOverModalProps = {
   onReturnHomeClick: () => void
   onPlayAgainClick: () => void
 }

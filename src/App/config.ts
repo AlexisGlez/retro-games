@@ -1,9 +1,14 @@
 import { constants } from '@app-src/shared/constants'
 
-export const pagesConfig = {
+type PagesConfig = {
+  [constants.pages.home]: HomeData
+  [constants.pages.snake]: SnakeGame
+}
+
+export const pagesConfig: PagesConfig = {
   [constants.pages.home]: {
     games: {
-      snake: {
+      [constants.pages.snake]: {
         gameName: 'Snake',
         gamePageName: 'snake',
         imageName: 'snake_demo',
@@ -17,7 +22,20 @@ export const pagesConfig = {
   },
 }
 
-export const gamesSettings = {
+type GamesSettings = {
+  [constants.pages.snake]: Array<{
+    propertyName: string
+    displayName: string
+    type: 'number'
+    helperText: string
+    currentValue: any
+    step: number
+    min: number
+    max: number
+  }>
+}
+
+export const gamesSettings: GamesSettings = {
   [constants.pages.snake]: [
     {
       propertyName: 'cellSize',

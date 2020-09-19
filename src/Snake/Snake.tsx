@@ -1,3 +1,5 @@
+/// <reference path="./Snake.d.ts" />
+
 import React from 'react'
 import debounce from 'lodash.debounce'
 import { useRouter } from 'next/router'
@@ -7,7 +9,7 @@ import { GameOverModal } from '@app-shared/components/GameOverModal'
 import { constants } from '@app-src/shared/constants'
 
 import { Screen } from './components/Screen'
-import { GameController, GameControls } from './GameController'
+import { GameController } from './controller/GameController'
 
 import styles from './Snake.module.css'
 
@@ -25,12 +27,7 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-type SnakeProps = {
-  cellSize?: number
-  gameSpeed?: number
-}
-
-export const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
+export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => {
   if (!gameController) {
     gameController = new GameController(cellSize)
   }
@@ -64,7 +61,7 @@ export const Snake: React.FC<SnakeProps> = ({ cellSize = 20, gameSpeed = 1 }) =>
     // If use presses the arrow keys, event.key will have the following values:
     // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
     const direction = event.key.replace('Arrow', '')
-    gameController!.requestNextSnakeMovement(direction as GameControls)
+    gameController!.requestNextSnakeMovement(direction as SnakeGame.Controls)
   }
 
   function runGame() {

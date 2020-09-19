@@ -1,3 +1,5 @@
+/// <reference path="./GameSettingsModal.d.ts" />
+
 import React from 'react'
 import {
   Modal,
@@ -11,35 +13,10 @@ import {
 
 import { GameSetting } from './GameSetting'
 
-export type GameSettings = {
-  propertyName: string
-  displayName: string
-  helperText: string
-  type: string
-  currentValue: number
-  step: number
-  min: number
-  max: number
-}
-
-export type Game = {
-  gameName: string
-  gameSettings: Array<GameSettings>
-}
-
-export type GameSettingsUpdates = {
-  gameName: string
-  gameSettings: Array<{
-    propertyName: string
-    oldValue: any
-    newValue: any
-  }>
-}
-
-interface GameSettingsModalProps extends Game {
+type GameSettingsModalProps = GameSettingsModal.Game & {
   isOpen: boolean
   onClose: () => void
-  onGameSettingsChanged: (gameSettings: GameSettingsUpdates) => void
+  onGameSettingsChanged: (gameSettings: GameSettingsModal.GameSettingsUpdates) => void
 }
 
 export const GameSettingsModal: React.FC<GameSettingsModalProps> = ({

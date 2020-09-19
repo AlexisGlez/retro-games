@@ -1,3 +1,5 @@
+/// <reference path="./Home.d.ts" />
+
 import React from 'react'
 import { Flex, Heading, Text, SimpleGrid } from '@chakra-ui/core'
 
@@ -6,18 +8,7 @@ import { GamePreview } from './components/GamePreview'
 import { theme } from '@app-shared/theme'
 import { constants } from '@app-src/shared/constants'
 
-type HomeProps = {
-  games: {
-    [key: string]: {
-      gameName: string
-      gamePageName: string
-      imageName: string
-      imageAlt: string
-    }
-  }
-}
-
-export const Home: React.FC<HomeProps> = ({ games }) => {
+export const Home: React.FC<HomeData> = ({ games }) => {
   return (
     <Flex justify="center" align="center" h="100vh" direction="column">
       <Heading
@@ -33,7 +24,7 @@ export const Home: React.FC<HomeProps> = ({ games }) => {
       </Text>
       <SimpleGrid p="1rem" columns={{ sm: 1, md: 2, lg: 3 }} spacing="1rem">
         {Object.keys(games).map((game) => (
-          <GamePreview key={game} {...games[game]} />
+          <GamePreview key={game} {...games[game as GameNames]} />
         ))}
       </SimpleGrid>
     </Flex>
