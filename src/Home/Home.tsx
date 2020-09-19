@@ -1,10 +1,10 @@
 import React from 'react'
 import { Flex, Heading, Text, SimpleGrid } from '@chakra-ui/core'
 
-import GamePreview from './components/GamePreview'
+import { GamePreview } from './components/GamePreview'
 
-import theme from '@app-shared/theme'
-import constants from '@app-src/shared/constants'
+import { theme } from '@app-shared/theme'
+import { constants } from '@app-src/shared/constants'
 
 type HomeProps = {
   games: {
@@ -17,7 +17,7 @@ type HomeProps = {
   }
 }
 
-const Home: React.FC<HomeProps> = ({ games }) => {
+export const Home: React.FC<HomeProps> = ({ games }) => {
   return (
     <Flex justify="center" align="center" h="100vh" direction="column">
       <Heading
@@ -41,5 +41,3 @@ const Home: React.FC<HomeProps> = ({ games }) => {
 }
 
 Home.displayName = constants.pages.home
-
-export default Home

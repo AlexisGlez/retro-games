@@ -1,3 +1,1 @@
-import GamePreview from './GamePreview'
-
-export default GamePreview
+export * from './GamePreview'

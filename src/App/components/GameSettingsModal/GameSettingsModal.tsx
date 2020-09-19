@@ -9,7 +9,7 @@ import {
   Flex,
 } from '@chakra-ui/core'
 
-import GameSetting from './GameSetting'
+import { GameSetting } from './GameSetting'
 
 export type GameSettings = {
   propertyName: string
@@ -42,7 +42,7 @@ interface GameSettingsModalProps extends Game {
   onGameSettingsChanged: (gameSettings: GameSettingsUpdates) => void
 }
 
-const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
+export const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
   isOpen,
   onClose,
   gameName,
@@ -110,5 +110,3 @@ const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
     </Modal>
   )
 }
-
-export default GameSettingsModal

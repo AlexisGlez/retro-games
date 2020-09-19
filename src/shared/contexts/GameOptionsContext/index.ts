@@ -5,6 +5,4 @@ type GameOptionsContext = {
   onGameHelpClick?: (gameName: string) => void
 }
 
-const GameOptionsContext = React.createContext<GameOptionsContext>({})
-
-export default GameOptionsContext
+export const GameOptionsContext = React.createContext<GameOptionsContext>({})

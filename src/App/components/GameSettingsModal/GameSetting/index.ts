@@ -1,3 +1,1 @@
-import GameSetting from './GameSetting'
-
-export default GameSetting
+export * from './GameSetting'
