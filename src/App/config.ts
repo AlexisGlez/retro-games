@@ -1,4 +1,4 @@
-import { constants } from '@app-src/shared/constants'
+import { constants } from '@app-shared/constants'
 
 type PagesConfig = {
   [constants.pages.home]: HomeData

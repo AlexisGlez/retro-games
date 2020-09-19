@@ -6,7 +6,7 @@ import { Flex, Heading, Text, SimpleGrid } from '@chakra-ui/core'
 import { GamePreview } from './components/GamePreview'
 
 import { theme } from '@app-shared/theme'
-import { constants } from '@app-src/shared/constants'
+import { constants } from '@app-shared/constants'
 
 export const Home: React.FC<HomeData> = ({ games }) => {
   return (

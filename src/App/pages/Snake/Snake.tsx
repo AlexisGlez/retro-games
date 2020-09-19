@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
-import { constants } from '@app-src/shared/constants'
+import { constants } from '@app-shared/constants'
 
 import { Screen } from './components/Screen'
 import { GameController } from './controller/GameController'

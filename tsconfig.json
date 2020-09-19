@@ -19,8 +19,8 @@
     "paths": {
       "@app-src/*": ["src/*"],
       "@app-shared/*": ["src/shared/*"],
-      "@app-home/*": ["src/Home/*"],
-      "@app-snake/*": ["src/Snake/*"]
+      "@app-home/*": ["src/App/pages/Home/*"],
+      "@app-snake/*": ["src/App/pages/Snake/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,
