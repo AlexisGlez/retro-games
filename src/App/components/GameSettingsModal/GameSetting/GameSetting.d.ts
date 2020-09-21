@@ -3,7 +3,7 @@ type GameSetting = {
   displayName: string
   helperText: string
   type: string
-  currentValue: number
+  currentValue: any
   step: number
   min: number
   max: number

@@ -8,28 +8,46 @@ import { theme } from '@app-shared/theme'
 import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 
 import { GameSettingsModal } from './components/GameSettingsModal'
-import { pagesConfig, gamesSettings } from './config'
+import { GameHelpModal } from './components/GameHelpModal'
+import { pagesConfig, gamesSettings, gamesHelp } from './config'
+
+type CurrentGame = GameSettingsModal.Game | GameHelpModal.Game
 
 export function App({ Component, pageProps }: AppProps) {
   const [currentPagesConfig, setCurrentPagesConfig] = React.useState(pagesConfig)
   const [currentGamesSettings, setCurrentGamesSettings] = React.useState(gamesSettings)
+
   const gameSettingsModal = useDisclosure(false)
-  const [currentGame, setCurrentGame] = React.useState<GameSettingsModal.Game>({
+  const gameHelpModal = useDisclosure(false)
+
+  const [currentGame, setCurrentGame] = React.useState<CurrentGame>({
     gameName: '',
     gameSettings: [],
+    gameHelp: {
+      description: '',
+      controls: '',
+      gameOver: '',
+    },
   })
 
   const gameOptions = {
     onGameSettingsClick: (gameName: string) => {
-      setCurrentGame({
+      setCurrentGame((prevState) => ({
+        ...prevState,
         gameName,
         gameSettings: currentGamesSettings[gameName as GameNames] as Array<GameSetting>,
-      })
+      }))
 
       gameSettingsModal.onOpen()
     },
     onGameHelpClick: (gameName: string) => {
-      console.log('onGameHelpClick', gameName)
+      setCurrentGame((prevState) => ({
+        ...prevState,
+        gameName,
+        gameHelp: gamesHelp[gameName as GameNames],
+      }))
+
+      gameHelpModal.onOpen()
     },
   }
 
@@ -78,7 +96,14 @@ export function App({ Component, pageProps }: AppProps) {
             isOpen={gameSettingsModal.isOpen}
             onClose={gameSettingsModal.onClose}
             onGameSettingsChanged={onGameSettingsChanged}
-            {...currentGame}
+            gameName={currentGame.gameName}
+            gameSettings={(currentGame as GameSettingsModal.Game).gameSettings}
+          />
+          <GameHelpModal
+            isOpen={gameHelpModal.isOpen}
+            onClose={gameHelpModal.onClose}
+            gameName={currentGame.gameName}
+            gameHelp={(currentGame as GameHelpModal.Game).gameHelp}
           />
         </ComponentWrapper>
       </ColorModeProvider>
