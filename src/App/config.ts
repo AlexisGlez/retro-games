@@ -23,16 +23,7 @@ export const pagesConfig: PagesConfig = {
 }
 
 type GamesSettings = {
-  [constants.pages.snake]: Array<{
-    propertyName: string
-    displayName: string
-    type: 'number'
-    helperText: string
-    currentValue: any
-    step: number
-    min: number
-    max: number
-  }>
+  [constants.pages.snake]: Array<GameSetting>
 }
 
 export const gamesSettings: GamesSettings = {
@@ -58,4 +49,18 @@ export const gamesSettings: GamesSettings = {
       max: 9,
     },
   ],
+}
+
+type GamesHelp = {
+  [constants.pages.snake]: GameHelpModal.GameHelp
+}
+
+export const gamesHelp: GamesHelp = {
+  [constants.pages.snake]: {
+    description:
+      'The player controls a snake that is really hungry. The objective is to eat as many pieces of food as possible.',
+    gameOver: 'The player loses when the snake runs into the screen border, or itself.',
+    controls:
+      'The player can move the snake up, down, left, or right with the arrow keys or by swiping those directions within the screen.',
+  },
 }
