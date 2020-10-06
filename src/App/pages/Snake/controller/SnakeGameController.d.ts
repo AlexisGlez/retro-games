@@ -10,6 +10,3 @@ namespace SnakeGame {
 
   type Settings = Partial<{ intialGameState: State }>
 }
-
-type Coordinate = { x: number; y: number }
-type GridSize = { width: number; height: number }

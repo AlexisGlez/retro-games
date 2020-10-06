@@ -9,13 +9,13 @@ import { GameOverModal } from '@app-shared/components/GameOverModal'
 import { constants } from '@app-shared/constants'
 
 import { Screen } from './components/Screen'
-import { GameController } from './controller/GameController'
+import { SnakeGameController } from './controller/SnakeGameController'
 
 import styles from './Snake.module.css'
 
 const FRAME_RATE = 10
 
-let gameController: GameController | undefined
+let gameController: SnakeGameController | undefined
 let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
@@ -29,7 +29,7 @@ const swiperConfig: SwipeableOptions = {
 
 export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => {
   if (!gameController) {
-    gameController = new GameController(cellSize)
+    gameController = new SnakeGameController(cellSize)
   }
 
   const [gameState, setGameState] = React.useState(gameController.getCurrentGameState())
@@ -57,14 +57,17 @@ export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => 
     }
   }, [])
 
-  const onKeyDownListener = (event: KeyboardEvent) => {
-    // If use presses the arrow keys, event.key will have the following values:
-    // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
-    const direction = event.key.replace('Arrow', '')
-    gameController!.requestNextSnakeMovement(direction as SnakeGame.Controls)
-  }
+  const onKeyDownListener = React.useCallback(
+    (event: KeyboardEvent) => {
+      // If use presses the arrow keys, event.key will have the following values:
+      // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
+      const direction = event.key.replace('Arrow', '')
+      gameController!.requestNextSnakeMovement(direction as SnakeGame.Controls)
+    },
+    [gameController],
+  )
 
-  function runGame() {
+  const runGame = React.useCallback(() => {
     intervalId = setInterval(() => {
       const nextGameState = gameController!.getNextGameState()
 
@@ -75,22 +78,22 @@ export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => 
         setIsGameOver(true)
       }
     }, 1000 / (FRAME_RATE * gameSpeed))
-  }
+  }, [gameController])
 
-  function resetGame() {
+  const resetGame = React.useCallback(() => {
     clearInterval(intervalId)
-    gameController = new GameController(cellSize)
+    gameController = new SnakeGameController(cellSize)
     const newGame = gameController.getCurrentGameState()
     setGameState(newGame)
     setIsGameOver(false)
     runGame()
-  }
+  }, [intervalId])
 
   const router = useRouter()
-  function returnToHome() {
+  const returnToHome = React.useCallback(() => {
     setIsGameOver(false)
     router.back()
-  }
+  }, [router])
 
   const handlers = useSwipeable(swiperConfig)
 

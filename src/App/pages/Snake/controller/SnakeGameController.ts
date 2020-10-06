@@ -1,7 +1,8 @@
-/// <reference path="./GameController.d.ts" />
+/// <reference path="./SnakeGameController.d.ts" />
 
 import isEqual from 'lodash.isequal'
-import { isServer, getGridSize } from '@app-shared/utils'
+import { isServer } from '@app-shared/utils'
+import { GridGameController } from '@app-shared/controllers/GridGameController'
 
 const SNAKE_MOVEMENTS = {
   left: { x: -1, y: 0 },
@@ -10,17 +11,12 @@ const SNAKE_MOVEMENTS = {
   down: { x: 0, y: 1 },
 } as const
 
-export class GameController {
-  public readonly gridSize: GridSize = getGridSize()
-
+export class SnakeGameController extends GridGameController {
   private currentGameState: SnakeGame.State
-  private widthLimit: number
-  private heightLimit: number
   private nextSnakeMovement: Coordinate
 
   public constructor(cellSize: number, settings: SnakeGame.Settings = {}) {
-    this.widthLimit = Math.floor(this.gridSize.width / cellSize)
-    this.heightLimit = Math.floor(this.gridSize.height / cellSize)
+    super(cellSize)
 
     this.currentGameState = settings.intialGameState
       ? settings.intialGameState
