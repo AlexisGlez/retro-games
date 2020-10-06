@@ -20,7 +20,8 @@
       "@app-src/*": ["src/*"],
       "@app-shared/*": ["src/shared/*"],
       "@app-home/*": ["src/App/pages/Home/*"],
-      "@app-snake/*": ["src/App/pages/Snake/*"]
+      "@app-snake/*": ["src/App/pages/Snake/*"],
+      "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,
