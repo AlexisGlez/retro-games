@@ -1,4 +1,3 @@
-type SnakeGame = {
-  cellSize?: number
+type SnakeGameProps = GridGame & {
   gameSpeed?: number
 }

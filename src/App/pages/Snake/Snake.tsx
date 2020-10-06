@@ -27,7 +27,7 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => {
+export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }) => {
   if (!gameController) {
     gameController = new SnakeGameController(cellSize)
   }
@@ -91,7 +91,6 @@ export const Snake: React.FC<SnakeGame> = ({ cellSize = 20, gameSpeed = 1 }) => 
 
   const router = useRouter()
   const returnToHome = React.useCallback(() => {
-    setIsGameOver(false)
     router.back()
   }, [router])
 
