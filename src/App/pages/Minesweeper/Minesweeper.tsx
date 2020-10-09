@@ -3,32 +3,54 @@
 import React from 'react'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
-import { useRouter } from 'next/router'
+import { FullScreen } from '@app-shared/components/FullScreen'
+import { useWindowResize } from '@app-shared/hooks/useWindowResize'
+import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
 
 import { MinesweeperGameController } from './controller/MinesweeperGameController'
+import { Screen } from './components/Screen'
 
 let gameController: MinesweeperGameController | undefined
 
-export const Minesweeper: React.FC<MinesweeperGameProps> = ({ cellSize = 20 }) => {
-  if (!gameController) {
-    gameController = new MinesweeperGameController(cellSize)
-  }
-
+export const Minesweeper: React.FC<MinesweeperGameProps> = ({ cellSize = 150, bombs = 3 }) => {
+  const [gameState, setGameState] = React.useState<Array<Array<MinesweeperGame.CellData>>>([])
   const [isGameOver, setIsGameOver] = React.useState(false)
 
+  React.useEffect(() => {
+    gameController = new MinesweeperGameController(cellSize, bombs)
+    setGameState(gameController.getGameGrid())
+
+    return () => {
+      gameController = undefined
+    }
+  }, [])
+
   const resetGame = React.useCallback(() => {
-    gameController = new MinesweeperGameController(cellSize)
+    gameController = new MinesweeperGameController(cellSize, bombs)
+    setGameState(gameController.getGameGrid())
     setIsGameOver(false)
   }, [])
 
-  const router = useRouter()
-  const returnToHome = React.useCallback(() => {
-    router.back()
-  }, [router])
+  useWindowResize(resetGame)
+
+  const returnToHome = useReturnToHome()
+
+  const onCellInteraction = React.useCallback(
+    (action: MinesweeperGame.Action, row: number, col: number) => {
+      const nextGameState = gameController!.getNextGameState(action, row, col)
+      setGameState([...nextGameState.game])
+      setIsGameOver(nextGameState.gameStatus !== 'ongoing')
+    },
+    [gameController],
+  )
 
   return (
     <section>
-      <div>Hello 🌎</div>
+      <FullScreen>
+        {gameController && (
+          <Screen cellSize={cellSize} gameGrid={gameState} onCellInteraction={onCellInteraction} />
+        )}
+      </FullScreen>
       {isGameOver && (
         <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
       )}

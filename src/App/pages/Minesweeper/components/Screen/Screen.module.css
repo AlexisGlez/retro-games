@@ -1,0 +1,18 @@
+.screen {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  border-bottom-color: #705e5e;
+  border-left-color: white;
+  border-right-color: #7b7b7b;
+  border-top-color: white;
+  border: 1.5px solid;
+  text-align: center;
+  vertical-align: middle;
+}

@@ -1,17 +1,16 @@
 /// <reference path="./Snake.d.ts" />
 
 import React from 'react'
-import debounce from 'lodash.debounce'
-import { useRouter } from 'next/router'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
+import { FullScreen } from '@app-shared/components/FullScreen'
 import { constants } from '@app-shared/constants'
+import { useWindowResize } from '@app-shared/hooks/useWindowResize'
+import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
 
 import { Screen } from './components/Screen'
 import { SnakeGameController } from './controller/SnakeGameController'
-
-import styles from './Snake.module.css'
 
 const FRAME_RATE = 10
 
@@ -34,16 +33,6 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
 
   const [gameState, setGameState] = React.useState(gameController.getCurrentGameState())
   const [isGameOver, setIsGameOver] = React.useState(false)
-
-  React.useEffect(() => {
-    const handleWindowResize = debounce(resetGame, 250)
-
-    window.addEventListener('resize', handleWindowResize)
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
 
   React.useEffect(() => {
     document.addEventListener('keydown', onKeyDownListener)
@@ -89,18 +78,17 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
     runGame()
   }, [intervalId])
 
-  const router = useRouter()
-  const returnToHome = React.useCallback(() => {
-    router.back()
-  }, [router])
+  useWindowResize(resetGame)
+
+  const returnToHome = useReturnToHome()
 
   const handlers = useSwipeable(swiperConfig)
 
   return (
     <section>
-      <div className={styles.size} {...handlers}>
+      <FullScreen containerProps={handlers}>
         <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
-      </div>
+      </FullScreen>
       {isGameOver && (
         <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
       )}
