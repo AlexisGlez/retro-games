@@ -2,7 +2,8 @@ import { constants } from '@app-shared/constants'
 
 type PagesConfig = {
   [constants.pages.home]: HomeData
-  [constants.pages.snake]: SnakeGame
+  [constants.pages.snake]: SnakeGameProps
+  [constants.pages.minesweeper]: MinesweeperGameProps
 }
 
 export const pagesConfig: PagesConfig = {
@@ -14,16 +15,26 @@ export const pagesConfig: PagesConfig = {
         imageName: 'snake_demo',
         imageAlt: 'Snake Game',
       },
+      [constants.pages.minesweeper]: {
+        gameName: 'Minesweeper',
+        gamePageName: 'minesweeper',
+        imageName: 'minesweeper_demo',
+        imageAlt: 'Minesweeper Game',
+      },
     },
   },
   [constants.pages.snake]: {
     cellSize: 20,
     gameSpeed: 1,
   },
+  [constants.pages.minesweeper]: {
+    bombs: 3,
+  },
 }
 
 type GamesSettings = {
   [constants.pages.snake]: Array<GameSetting>
+  [constants.pages.minesweeper]: Array<GameSetting>
 }
 
 export const gamesSettings: GamesSettings = {
@@ -49,10 +60,23 @@ export const gamesSettings: GamesSettings = {
       max: 9,
     },
   ],
+  [constants.pages.minesweeper]: [
+    {
+      propertyName: 'bombs',
+      displayName: 'Bombs Amount',
+      type: 'number',
+      helperText: 'The number of bombs to be placed in the game',
+      currentValue: pagesConfig[constants.pages.minesweeper].bombs,
+      step: 1,
+      min: 3,
+      max: 150,
+    },
+  ]
 }
 
 type GamesHelp = {
   [constants.pages.snake]: GameHelpModal.GameHelp
+  [constants.pages.minesweeper]: GameHelpModal.GameHelp
 }
 
 export const gamesHelp: GamesHelp = {
@@ -63,4 +87,9 @@ export const gamesHelp: GamesHelp = {
     controls:
       'The player can move the snake up, down, left, or right with the arrow keys or by swiping those directions within the screen.',
   },
+  [constants.pages.minesweeper]: {
+    description: 'The objective of the game is to clear a rectangular board containing hidden bombs without detonating any of them, with help from clues about the number of neighboring mines in each field.',
+    gameOver: 'The player loses if a bomb is clicked. The player wins by placing all the flags on the bombs cells.',
+    controls: 'Click on a cell to reveal it. To put a flag, right click on the cell.',
+  }
 }

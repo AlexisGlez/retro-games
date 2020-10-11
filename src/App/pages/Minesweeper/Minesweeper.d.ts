@@ -1,3 +1,3 @@
-type MinesweeperGameProps = GridGame & {
+type MinesweeperGameProps = {
   bombs?: number
 }

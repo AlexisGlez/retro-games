@@ -1,5 +1,5 @@
 type ChildrenOnlyProp = { children: React.ReactNode }
 
-type PageNames = 'Home' | 'Snake'
+type GameNames = 'Snake' | 'Minesweeper'
 
-type GameNames = 'Snake'
+type PageNames = 'Home' | GameNames
