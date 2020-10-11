@@ -6,13 +6,48 @@ import { GameOverModal } from '@app-shared/components/GameOverModal'
 import { FullScreen } from '@app-shared/components/FullScreen'
 import { useWindowResize } from '@app-shared/hooks/useWindowResize'
 import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
+import { constants } from '@app-src/shared/constants'
 
 import { MinesweeperGameController } from './controller/MinesweeperGameController'
 import { Screen } from './components/Screen'
 
 let gameController: MinesweeperGameController | undefined
 
-export const Minesweeper: React.FC<MinesweeperGameProps> = ({ cellSize = 150, bombs = 3 }) => {
+function calculateCellSize(bombs: number): number {
+  if (bombs <= 5) {
+    return 150
+  }
+
+  if (bombs <= 10) {
+    return 120
+  }
+
+  if (bombs <= 20) {
+    return 90
+  }
+
+  if (bombs <= 35) {
+    return 70
+  }
+
+  if (bombs <= 50) {
+    return 60
+  }
+
+  if (bombs <= 70) {
+    return 50
+  }
+
+  if (bombs <= 120) {
+    return 40
+  }
+
+  return 30
+}
+
+export const Minesweeper: React.FC<MinesweeperGameProps> = ({ bombs = 3 }) => {
+  const cellSize = calculateCellSize(bombs)
+
   const [gameState, setGameState] = React.useState<Array<Array<MinesweeperGame.CellData>>>([])
   const [isGameOver, setIsGameOver] = React.useState(false)
 
@@ -57,3 +92,5 @@ export const Minesweeper: React.FC<MinesweeperGameProps> = ({ cellSize = 150, bo
     </section>
   )
 }
+
+Minesweeper.displayName = constants.pages.minesweeper
