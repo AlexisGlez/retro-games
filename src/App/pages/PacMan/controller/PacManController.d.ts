@@ -1,0 +1,3 @@
+namespace PacManGame {
+  type State = {}
+}
