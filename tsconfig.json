@@ -21,6 +21,7 @@
       "@app-shared/*": ["src/shared/*"],
       "@app-home/*": ["src/App/pages/Home/*"],
       "@app-snake/*": ["src/App/pages/Snake/*"],
+      "@app-pacman/*": ["src/App/pages/PacMan/*"],
       "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"]
     },
     "preserveConstEnums": true,
