@@ -8,6 +8,7 @@ import { FullScreen } from '@app-shared/components/FullScreen'
 import { constants } from '@app-shared/constants'
 import { useWindowResize } from '@app-shared/hooks/useWindowResize'
 import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
+import { useArrowKeysListener } from '@app-shared/hooks/useKeyDownListener'
 
 import { Screen } from './components/Screen'
 import { SnakeGameController } from './controller/SnakeGameController'
@@ -19,7 +20,7 @@ let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
   onSwiped: (event) => {
-    gameController!.requestNextSnakeMovement(event.dir)
+    gameController!.requestArrowMovement(event.dir)
   },
   preventDefaultTouchmoveEvent: true,
   trackTouch: true,
@@ -35,26 +36,15 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
   const [isGameOver, setIsGameOver] = React.useState(false)
 
   React.useEffect(() => {
-    document.addEventListener('keydown', onKeyDownListener)
-
     runGame()
 
     return () => {
       clearInterval(intervalId)
       gameController = undefined
-      document.removeEventListener('keydown', onKeyDownListener)
     }
   }, [])
 
-  const onKeyDownListener = React.useCallback(
-    (event: KeyboardEvent) => {
-      // If use presses the arrow keys, event.key will have the following values:
-      // ArrowUp, ArrowDown, ArrowLeft, or ArrowRight.
-      const direction = event.key.replace('Arrow', '')
-      gameController!.requestNextSnakeMovement(direction as SnakeGame.Controls)
-    },
-    [gameController],
-  )
+  useArrowKeysListener(gameController.requestArrowMovement)
 
   const runGame = React.useCallback(() => {
     intervalId = setInterval(() => {

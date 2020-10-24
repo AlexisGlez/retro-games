@@ -6,7 +6,5 @@ namespace SnakeGame {
     foodPosition: Coordinate
   }
 
-  type Controls = 'Up' | 'Right' | 'Down' | 'Left'
-
   type Settings = Partial<{ intialGameState: State }>
 }

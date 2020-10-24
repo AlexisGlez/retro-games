@@ -8,6 +8,7 @@ import { FullScreen } from '@app-shared/components/FullScreen'
 import { constants } from '@app-shared/constants'
 import { useWindowResize } from '@app-shared/hooks/useWindowResize'
 import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
+import { useArrowKeysListener } from '@app-shared/hooks/useKeyDownListener'
 
 import { Screen } from './components/Screen'
 import { PacManController } from './controller/PacManController'
@@ -42,6 +43,8 @@ export const PacMan: React.FC<PacManGameProps> = ({ level = 'easy' }) => {
   }, [intervalId])
 
   useWindowResize(resetGame)
+
+  useArrowKeysListener(gameController.requestArrowMovement)
 
   const returnToHome = useReturnToHome()
 

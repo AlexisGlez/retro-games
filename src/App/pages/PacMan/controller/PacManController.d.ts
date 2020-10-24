@@ -9,4 +9,9 @@ namespace PacManGame {
     style: Object
     attributes: Array<string>
   }
+
+  type PacManDirection = {
+    movement: number
+    rotation: number
+  }
 }

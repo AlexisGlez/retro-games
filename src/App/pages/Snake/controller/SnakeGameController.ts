@@ -11,7 +11,7 @@ const SNAKE_MOVEMENTS = {
   down: { x: 0, y: 1 },
 } as const
 
-export class SnakeGameController extends GridGameController {
+export class SnakeGameController extends GridGameController implements ArrowMovement {
   private currentGameState: SnakeGame.State
   private nextSnakeMovement: Coordinate
 
@@ -224,7 +224,7 @@ export class SnakeGameController extends GridGameController {
     this.currentGameState.snakeBody.shift()
   }
 
-  public requestNextSnakeMovement(pressedControl: SnakeGame.Controls): void {
+  public requestArrowMovement = (pressedControl: ArrowControls): void => {
     if (pressedControl === 'Left') {
       this.nextSnakeMovement = this.isSnakeMovingToTheRight()
         ? this.currentGameState.snakeMovement

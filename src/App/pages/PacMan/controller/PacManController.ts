@@ -4,7 +4,9 @@ import { PacMan } from './PacMan'
 import { Ghost } from './Ghost'
 import { levels, OBJECT_TYPES, OBJECT_TYPES_AND_LEVEL_MATCH } from './config'
 
-export class PacManController {
+const CELL_SIZE = 20
+
+export class PacManController implements ArrowMovement {
   private dots: number
   private gameBoard: Array<PacManGame.GameBoardPiece>
   private pacMan: PacMan | undefined
@@ -30,7 +32,7 @@ export class PacManController {
 
       gamePiece = {
         type: obj,
-        style: { width: 20, height: 20 },
+        style: { width: CELL_SIZE, height: CELL_SIZE },
         attributes: [],
       }
 
@@ -62,5 +64,31 @@ export class PacManController {
 
   public getGameState(): PacManGame.State {
     return { gameBoard: this.gameBoard }
+  }
+
+  public requestArrowMovement = (pressedControl: ArrowControls): void => {
+    let nextDirection: PacManGame.PacManDirection | undefined
+
+    if (pressedControl === 'Left') {
+      nextDirection = { movement: -1, rotation: 180 }
+    } else if (pressedControl === 'Right') {
+      nextDirection = { movement: 1, rotation: 0 }
+    } else if (pressedControl === 'Up') {
+      nextDirection = { movement: -CELL_SIZE, rotation: 270 }
+    } else if (pressedControl === 'Down') {
+      nextDirection = { movement: CELL_SIZE, rotation: 90 }
+    }
+
+    if (!nextDirection) {
+      return
+    }
+
+    const nextPacManPosition = this.pacMan!.getCurrentPosition() + nextDirection.movement
+
+    if (this.gameBoard[nextPacManPosition].type === OBJECT_TYPES.WALL) {
+      return
+    }
+
+    this.pacMan!.setNextPacManDirection(nextDirection)
   }
 }
