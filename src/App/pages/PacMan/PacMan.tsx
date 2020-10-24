@@ -10,11 +10,11 @@ import { useWindowResize } from '@app-shared/hooks/useWindowResize'
 import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
 
 import { Screen } from './components/Screen'
-// import { PacManController } from './controller/PacManController'
+import { PacManController } from './controller/PacManController'
 
 // const FRAME_RATE = 10
 
-// let gameController: PacManController | undefined
+let gameController: PacManController | undefined
 let intervalId: NodeJS.Timeout
 
 const swiperConfig: SwipeableOptions = {
@@ -26,11 +26,18 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-export const PacMan: React.FC<{}> = ({}) => {
+export const PacMan: React.FC<PacManGameProps> = ({ level = 'easy' }) => {
+  if (!gameController) {
+    gameController = new PacManController(level)
+  }
+
+  const [gameState, setGameState] = React.useState(gameController.getGameState())
   const [isGameOver, setIsGameOver] = React.useState(false)
 
   const resetGame = React.useCallback(() => {
     clearInterval(intervalId)
+    gameController = new PacManController(level)
+    setGameState(gameController.getGameState())
     setIsGameOver(false)
   }, [intervalId])
 
@@ -43,7 +50,7 @@ export const PacMan: React.FC<{}> = ({}) => {
   return (
     <section>
       <FullScreen containerProps={handlers}>
-        <Screen />
+        <Screen gameState={gameState} />
       </FullScreen>
       {isGameOver && (
         <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
