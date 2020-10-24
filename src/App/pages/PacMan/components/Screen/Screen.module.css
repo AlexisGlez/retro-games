@@ -3,3 +3,141 @@
   height: 100vh;
   width: 100vw;
 }
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+.game {
+  background: black;
+  display: inline-grid;
+  grid-template-columns: repeat(20, 20px);
+  position: relative;
+}
+
+.game-status {
+  align-items: center;
+  background: black;
+  border: 5px maroon solid;
+  color: white;
+  display: flex;
+  font-size: 1.5rem;
+  height: 50px;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.score {
+  align-items: center;
+  background: black;
+  border: 5px maroon solid;
+  color: white;
+  display: flex;
+  font-size: 2rem;
+  height: 50px;
+  justify-content: center;
+  margin-top: 1.5rem;
+  width: 200px;
+}
+
+.hide {
+  display: none;
+}
+
+.square {
+  display: block;
+}
+
+.blank {
+  background: black;
+}
+
+.wall {
+  border: 1px solid brown;
+}
+
+.dot {
+  background: white;
+  border: 8px solid black;
+  border-radius: 50%;
+}
+
+.pill {
+  background: white;
+  border: 5px solid black;
+  border-radius: 50%;
+}
+
+.ghost {
+  position: relative;
+  border: none;
+  border-radius: 10px 10px 2px 2px;
+}
+
+.ghost::before {
+  background: black;
+  border: 2px solid white;
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 3px;
+  left: 3px;
+  position: absolute;
+  top: 5px;
+  width: 3px;
+}
+
+.ghost::after {
+  background: black;
+  border-radius: 50%;
+  border: 2px solid white;
+  content: '';
+  display: block;
+  height: 3px;
+  position: absolute;
+  right: 3px;
+  top: 5px;
+  width: 3px;
+}
+
+.scared {
+  background: blue !important;
+}
+
+.blinky {
+  background: red;
+}
+
+.pinky {
+  background: pink;
+}
+
+.inky {
+  background: cyan;
+}
+
+.clyde {
+  background: orange;
+}
+
+.pacman {
+  animation: chew 0.2s linear forwards infinite;
+  background: yellow;
+  border-radius: 50%;
+  border: none;
+  clip-path: polygon(0 0, 20px 0, 20px -5px, 8px 10px, 20px 25px, 20px 20px, 0 20px);
+}
+
+@keyframes chew {
+  50% {
+    clip-path: polygon(0 0, 20px 0, 20px 10px, 8px 10px, 20px 10px, 20px 20px, 0 20px);
+  }
+}

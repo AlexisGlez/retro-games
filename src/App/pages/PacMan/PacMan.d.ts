@@ -1,3 +1,4 @@
-type SnakeGameProps = GridGame & {
+type PacManGameProps = {
   gameSpeed?: number
+  level: PacManGame.GameLevels
 }
