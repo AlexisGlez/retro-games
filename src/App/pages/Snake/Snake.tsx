@@ -62,8 +62,7 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
   const resetGame = React.useCallback(() => {
     clearInterval(intervalId)
     gameController = new SnakeGameController(cellSize)
-    const newGame = gameController.getCurrentGameState()
-    setGameState(newGame)
+    setGameState(gameController.getCurrentGameState())
     setIsGameOver(false)
     runGame()
   }, [intervalId])

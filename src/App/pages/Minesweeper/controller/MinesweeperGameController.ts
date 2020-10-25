@@ -110,7 +110,7 @@ export class MinesweeperGameController extends GridGameController {
       return { game: this.gameGrid, gameStatus: 'ongoing' }
     }
 
-    let gameStatus: MinesweeperGame.GameStatus = 'ongoing'
+    let gameStatus: GameStatus = 'ongoing'
     if (action === 'click') {
       gameStatus = this.onCellClicked(cell, row, col)
     } else if (action === 'flag') {
@@ -120,11 +120,7 @@ export class MinesweeperGameController extends GridGameController {
     return { game: this.gameGrid, gameStatus }
   }
 
-  private onCellClicked(
-    cell: MinesweeperGame.CellData,
-    row: number,
-    col: number,
-  ): MinesweeperGame.GameStatus {
+  private onCellClicked(cell: MinesweeperGame.CellData, row: number, col: number): GameStatus {
     if (cell.state === 'clicked') {
       return 'ongoing'
     }
@@ -174,7 +170,7 @@ export class MinesweeperGameController extends GridGameController {
     })
   }
 
-  private onCellFlagged(cell: MinesweeperGame.CellData): MinesweeperGame.GameStatus {
+  private onCellFlagged(cell: MinesweeperGame.CellData): GameStatus {
     if (cell.state === 'flagged') {
       cell.state = ''
       this.flags -= 1
@@ -191,7 +187,7 @@ export class MinesweeperGameController extends GridGameController {
     return 'ongoing'
   }
 
-  private checkForWin(): MinesweeperGame.GameStatus {
+  private checkForWin(): GameStatus {
     let cell: MinesweeperGame.CellData
     let matches = 0
 

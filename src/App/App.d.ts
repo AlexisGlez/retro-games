@@ -6,6 +6,8 @@ type PageNames = 'Home' | GameNames
 
 type ArrowControls = 'Up' | 'Right' | 'Down' | 'Left' | string
 
+type GameStatus = 'ongoing' | 'win' | 'lose'
+
 interface ArrowMovement {
   public requestArrowMovement: (pressedControl: ArrowControls) => void
 }

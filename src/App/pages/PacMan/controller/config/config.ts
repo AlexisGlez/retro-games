@@ -1,3 +1,12 @@
+export const CELL_SIZE = 20
+
+export const directions = {
+  left: { movement: -1, rotation: 180 },
+  right: { movement: 1, rotation: 0 },
+  up: { movement: -CELL_SIZE, rotation: 270 },
+  down: { movement: CELL_SIZE, rotation: 90 },
+}
+
 export const OBJECT_TYPES = {
   BLANK: 'blank',
   WALL: 'wall',
@@ -12,6 +21,8 @@ export const OBJECT_TYPES = {
   SCARED: 'scared',
   GHOSTLAIR: 'lair',
 } as const
+
+export type GamePieces = typeof OBJECT_TYPES[keyof typeof OBJECT_TYPES]
 
 // Ensures a way to match between the level and the objects that live inside of it.
 // The order in this array matters, because the levels arrays are constructed based on
