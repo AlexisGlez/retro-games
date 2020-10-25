@@ -1,6 +1,7 @@
 /// <reference path="./Snake.d.ts" />
 
 import React from 'react'
+import Head from 'next/head'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
@@ -74,14 +75,19 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
   const handlers = useSwipeable(swiperConfig)
 
   return (
-    <section>
-      <FullScreen containerProps={handlers}>
-        <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
-      </FullScreen>
-      {isGameOver && (
-        <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
-      )}
-    </section>
+    <>
+      <Head>
+        <title>Snake</title>
+      </Head>
+      <section>
+        <FullScreen containerProps={handlers}>
+          <Screen gameState={gameState} gridSize={gameController.gridSize} cellSize={cellSize} />
+        </FullScreen>
+        {isGameOver && (
+          <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
+        )}
+      </section>
+    </>
   )
 }
 

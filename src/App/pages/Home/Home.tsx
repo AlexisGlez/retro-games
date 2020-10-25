@@ -1,6 +1,7 @@
 /// <reference path="./Home.d.ts" />
 
 import React from 'react'
+import Head from 'next/head'
 import { Flex, Heading, Text, SimpleGrid } from '@chakra-ui/core'
 
 import { GamePreview } from './components/GamePreview'
@@ -13,6 +14,9 @@ import styles from './Home.module.css'
 export const Home: React.FC<HomeData> = ({ games }) => {
   return (
     <>
+      <Head>
+        <title>Retro Games</title>
+      </Head>
       <div className={styles.fixed}>
         <div className={styles.cover}>
           <div className={styles.layer} />

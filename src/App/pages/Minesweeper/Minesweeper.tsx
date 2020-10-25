@@ -1,6 +1,7 @@
 /// <reference path="./Minesweeper.d.ts" />
 
 import React from 'react'
+import Head from 'next/head'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
 import { FullScreen } from '@app-shared/components/FullScreen'
@@ -80,16 +81,25 @@ export const Minesweeper: React.FC<MinesweeperGameProps> = ({ bombs = 3 }) => {
   )
 
   return (
-    <section>
-      <FullScreen>
-        {gameController && (
-          <Screen cellSize={cellSize} gameGrid={gameState} onCellInteraction={onCellInteraction} />
+    <>
+      <Head>
+        <title>Minesweeper</title>
+      </Head>
+      <section>
+        <FullScreen>
+          {gameController && (
+            <Screen
+              cellSize={cellSize}
+              gameGrid={gameState}
+              onCellInteraction={onCellInteraction}
+            />
+          )}
+        </FullScreen>
+        {isGameOver && (
+          <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
         )}
-      </FullScreen>
-      {isGameOver && (
-        <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
-      )}
-    </section>
+      </section>
+    </>
   )
 }
 
