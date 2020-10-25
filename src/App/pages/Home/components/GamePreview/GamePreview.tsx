@@ -10,7 +10,6 @@ import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 import styles from './GamePreview.module.css'
 
 const gameBorder = 8
-const imageMaxHeight = 250
 
 export const GamePreview: React.FC<GamePreview> = ({
   gameName,
@@ -44,7 +43,6 @@ export const GamePreview: React.FC<GamePreview> = ({
           position="absolute"
           src={`/img/${imageName}.png`}
           alt={`${imageAlt} Demo Placeholder`}
-          maxHeight={imageMaxHeight}
           width="100%"
           height="100%"
           objectFit="cover"
@@ -53,7 +51,6 @@ export const GamePreview: React.FC<GamePreview> = ({
         <Image
           src={`/img/${imageName}.gif`}
           alt={`${imageAlt} Demo`}
-          maxHeight={imageMaxHeight}
           width="100%"
           height="100%"
           objectFit="cover"

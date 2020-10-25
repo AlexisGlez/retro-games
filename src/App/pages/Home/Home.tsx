@@ -22,7 +22,7 @@ export const Home: React.FC<HomeData> = ({ games }) => {
       <Text my="1rem" fontSize="3xl" textAlign="center">
         What do you want to play?
       </Text>
-      <SimpleGrid p="1rem" columns={{ sm: 1, md: 2, lg: 3 }} spacing="1rem">
+      <SimpleGrid p="1rem" columns={{ sm: 1, md: 2, lg: 3 }} spacing="1rem" gridAutoRows="1fr">
         {Object.keys(games).map((game) => (
           <GamePreview key={game} {...games[game as GameNames]} />
         ))}
