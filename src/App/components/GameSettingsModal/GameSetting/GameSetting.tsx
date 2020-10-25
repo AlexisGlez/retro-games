@@ -27,56 +27,76 @@ export const GameSetting: React.FC<GameSettingProps> = ({
   step,
   min,
   max,
+  options,
   onFormValueChange,
 }) => {
-  if (type !== 'number') {
+  if (type !== 'number' && type !== 'string') {
     return null
   }
 
   let component: React.ReactNode = null
 
-  if (max / step < 10) {
-    const options: Array<React.ReactNode> = []
-
-    for (let i = min; i <= max; i += step) {
-      options.push(
-        <option key={i} value={i}>
-          {i}
-        </option>,
-      )
-    }
-
+  if (type === 'string') {
     component = (
       <Select
         id={propertyName}
         aria-describedby={`${propertyName}-helper-text`}
         onChange={(e) => {
-          onFormValueChange(propertyName, Number(e.target.value))
+          onFormValueChange(propertyName, e.target.value)
         }}
         defaultValue={currentValue}
       >
-        {options}
+        {options!.map((value) => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
       </Select>
     )
   } else {
-    component = (
-      <NumberInput
-        step={step}
-        min={min}
-        max={max}
-        clampValueOnBlur={false}
-        defaultValue={currentValue}
-        onChange={(value) => {
-          onFormValueChange(propertyName, Number(value))
-        }}
-      >
-        <NumberInputField id={propertyName} type="number" />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
-    )
+    if (max! / step! < 10) {
+      const numberOptions: Array<React.ReactNode> = []
+
+      for (let i = min!; i <= max!; i += step!) {
+        numberOptions.push(
+          <option key={i} value={i}>
+            {i}
+          </option>,
+        )
+      }
+
+      component = (
+        <Select
+          id={propertyName}
+          aria-describedby={`${propertyName}-helper-text`}
+          onChange={(e) => {
+            onFormValueChange(propertyName, Number(e.target.value))
+          }}
+          defaultValue={currentValue}
+        >
+          {numberOptions}
+        </Select>
+      )
+    } else {
+      component = (
+        <NumberInput
+          step={step}
+          min={min}
+          max={max}
+          clampValueOnBlur={false}
+          defaultValue={currentValue}
+          onChange={(value) => {
+            onFormValueChange(propertyName, Number(value))
+          }}
+        >
+          <NumberInputField id={propertyName} type="number" />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      )
+    }
   }
 
   return (

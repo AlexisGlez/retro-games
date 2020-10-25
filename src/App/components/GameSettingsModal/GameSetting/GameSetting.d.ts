@@ -4,7 +4,8 @@ type GameSetting = {
   helperText: string
   type: string
   currentValue: any
-  step: number
-  min: number
-  max: number
+  step?: number
+  min?: number
+  max?: number
+  options?: Array<string>
 }
