@@ -13,7 +13,7 @@ import { useArrowKeysListener } from '@app-shared/hooks/useKeyDownListener'
 import { Screen } from './components/Screen'
 import { PacManController } from './controller/PacManController'
 
-const FRAME_RATE = 80
+const FRAME_RATE = 10
 const POWER_PILL_DURATION = 8000
 
 let gameController: PacManController | undefined
@@ -49,7 +49,7 @@ const swiperConfig: SwipeableOptions = {
   trackMouse: true,
 }
 
-export const PacMan: React.FC<PacManGameProps> = ({ level = 'easy' }) => {
+export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy' }) => {
   if (!gameController) {
     gameController = new PacManController(level)
   }
@@ -96,7 +96,7 @@ export const PacMan: React.FC<PacManGameProps> = ({ level = 'easy' }) => {
       playSound('/sounds/pacman/death.wav')
       resetGlobalVariables()
       setIsGameOver(true)
-    }, FRAME_RATE)
+    }, 1000 / (FRAME_RATE * gameSpeed))
   }, [gameController])
 
   const resetGame = React.useCallback(() => {

@@ -1,4 +1,4 @@
 type PacManGameProps = {
   gameSpeed?: number
-  level: PacManGame.GameLevels
+  level?: PacManGame.GameLevels
 }
