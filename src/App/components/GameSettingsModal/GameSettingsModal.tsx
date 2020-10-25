@@ -51,7 +51,7 @@ export const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
         oldValue: currSetting?.currentValue,
         newValue:
           currSetting?.type === 'number'
-            ? Math.min(Number(formValues[key]), currSetting.max)
+            ? Math.min(Number(formValues[key]), currSetting.max!)
             : formValues[key],
       }
     })
