@@ -1,6 +1,7 @@
 /// <reference path="./PacMan.d.ts" />
 
 import React from 'react'
+import Head from 'next/head'
 import { SwipeableOptions, useSwipeable } from 'react-swipeable'
 
 import { GameOverModal } from '@app-shared/components/GameOverModal'
@@ -116,14 +117,19 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
   const handlers = useSwipeable(swiperConfig)
 
   return (
-    <section>
-      <FullScreen containerProps={handlers}>
-        <Screen gameState={gameState} />
-      </FullScreen>
-      {isGameOver && (
-        <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
-      )}
-    </section>
+    <>
+      <Head>
+        <title>PacMan</title>
+      </Head>
+      <section>
+        <FullScreen containerProps={handlers}>
+          <Screen gameState={gameState} />
+        </FullScreen>
+        {isGameOver && (
+          <GameOverModal onReturnHomeClick={returnToHome} onPlayAgainClick={resetGame} />
+        )}
+      </section>
+    </>
   )
 }
 
