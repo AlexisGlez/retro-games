@@ -1,15 +1,20 @@
-export class PacMan {
-  private startPosition: number
-  private currentPosition: number
-  private speed: number
-  private timer: number
-  private direction: PacManGame.PacManDirection | undefined
+import { Character } from '../Character'
+import { OBJECT_TYPES, GamePieces } from '../config'
 
-  public constructor(startPosition: number, speed: number = 5) {
-    this.startPosition = startPosition
-    this.currentPosition = startPosition
-    this.speed = speed
-    this.timer = 0
+export class PacMan extends Character {
+  private hasEatenPowerPill: boolean
+
+  public constructor(startPosition: number, speed: number = 2) {
+    super(startPosition, speed)
+    this.hasEatenPowerPill = false
+  }
+
+  public setHasEatenPowerPill(powerPill: boolean) {
+    this.hasEatenPowerPill = powerPill
+  }
+
+  public hasPowerPill(): boolean {
+    return this.hasEatenPowerPill
   }
 
   public shouldMove(): boolean {
@@ -17,24 +22,26 @@ export class PacMan {
       return false
     }
 
-    if (this.timer !== this.speed) {
-      this.timer += 1
-      return false
+    return super.shouldMove()
+  }
+
+  public getNextMove(
+    isMovementValidAvoidingTypes: (pos: number, types: Array<GamePieces>) => boolean,
+  ): PacManGame.CharacterMove {
+    let position = this.currentPosition + this.direction!.movement
+
+    if (!isMovementValidAvoidingTypes(position, [OBJECT_TYPES.WALL, OBJECT_TYPES.GHOSTLAIR])) {
+      position = this.currentPosition
     }
 
-    this.timer = 0
+    return { direction: this.direction!, position }
+  }
+
+  public canRotate(): boolean {
     return true
   }
 
-  public getStartPosition(): number {
-    return this.startPosition
-  }
-
-  public getCurrentPosition(): number {
-    return this.currentPosition
-  }
-
-  public setNextPacManDirection(nextDirection: PacManGame.PacManDirection): void {
-    this.direction = nextDirection
+  public attributes(): Array<string> {
+    return [OBJECT_TYPES.PACMAN]
   }
 }

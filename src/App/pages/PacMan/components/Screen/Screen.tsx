@@ -15,14 +15,14 @@ export const Screen: React.FC<ScreenProps> = ({ gameState }) => {
             <div
               key={index}
               className={`
-                ${styles.square} ${styles[piece.type]}
+                ${styles.square}
                 ${piece.attributes.map((attr) => styles[attr]).join(' ')}
               `}
-              style={piece.style}
+              style={{ ...piece.style }}
             />
           ))}
         </div>
-        <div className={styles.score}></div>
+        <div className={styles.score}>{gameState.score}</div>
       </div>
     </div>
   )
