@@ -67,9 +67,11 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
     const initialSoundCallback = () => {
       playStartGameSound()
       document.removeEventListener('keydown', initialSoundCallback)
+      document.removeEventListener('click', initialSoundCallback)
     }
 
     document.addEventListener('keydown', initialSoundCallback)
+    document.addEventListener('click', initialSoundCallback)
 
     return resetGlobalVariables
   }, [])
