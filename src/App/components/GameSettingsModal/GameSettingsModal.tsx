@@ -77,7 +77,7 @@ export const GameSettingsModal: React.FC<GameSettingsModalProps> = ({
               />
             ))}
             <Flex p="1rem" justifyContent="space-around">
-              <Button variantColor="green" type="submit">
+              <Button colorScheme="green" type="submit">
                 Done!
               </Button>
             </Flex>
