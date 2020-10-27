@@ -30,14 +30,17 @@ function resetGlobalVariables() {
 
 function playStartGameSound() {
   if (!startGameSoundHasPlayed) {
-    playSound('/sounds/pacman/game_start.wav')
+    playSound('gameStartSound')
     startGameSoundHasPlayed = true
   }
 }
 
-function playSound(src: string) {
-  const soundEffect = new Audio(src)
-  soundEffect.play()
+function playSound(id: string) {
+  const audio = document.getElementById(id) as HTMLAudioElement
+
+  if (audio != null) {
+    audio.play()
+  }
 }
 
 const swiperConfig: SwipeableOptions = {
@@ -76,16 +79,16 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
       const nextGameState = gameController!.getNextGameState()
 
       if (nextGameState.latestAction === 'pill-eaten') {
-        playSound('/sounds/pacman/pill.wav')
+        playSound('pillSound')
 
         clearTimeout(powerPillTimerId)
         powerPillTimerId = setTimeout(() => {
           gameController!.powerPillTimeExpired()
         }, POWER_PILL_DURATION)
       } else if (nextGameState.latestAction === 'dot-eaten') {
-        playSound('/sounds/pacman/munch.wav')
+        playSound('munchSound')
       } else if (nextGameState.latestAction === 'ghost-eaten') {
-        playSound('/sounds/pacman/eat_ghost.wav')
+        playSound('eatGhostSound')
       }
 
       setGameState(nextGameState)
@@ -94,7 +97,7 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
         return
       }
 
-      playSound('/sounds/pacman/death.wav')
+      playSound('deathSound')
       resetGlobalVariables()
       setIsGameOver(true)
     }, 1000 / (FRAME_RATE * gameSpeed))
@@ -122,6 +125,21 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
         <title>PacMan</title>
       </Head>
       <section>
+        <audio id="gameStartSound">
+          <source src="/sounds/pacman/game_start.wav" />
+        </audio>
+        <audio id="pillSound">
+          <source src="/sounds/pacman/pill.wav" />
+        </audio>
+        <audio id="munchSound">
+          <source src="/sounds/pacman/munch.wav" />
+        </audio>
+        <audio id="eatGhostSound">
+          <source src="/sounds/pacman/eat_ghost.wav" />
+        </audio>
+        <audio id="deathSound">
+          <source src="/sounds/pacman/death.wav" />
+        </audio>
         <FullScreen containerProps={handlers}>
           <Screen gameState={gameState} />
         </FullScreen>
