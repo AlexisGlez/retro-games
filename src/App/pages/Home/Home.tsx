@@ -18,7 +18,7 @@ export const Home: React.FC<HomeData> = ({ games }) => {
           <div className={styles.layer} />
         </div>
       </div>
-      <Flex justify="center" align="center" h="100vh" direction="column">
+      <Flex justify="center" align="center" minH="100vh" pt="1rem" direction="column">
         <Heading
           fontSize="6xl"
           fontFamily="cursive"

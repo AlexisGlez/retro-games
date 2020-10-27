@@ -1,7 +1,10 @@
-import { theme as chakraTheme } from '@chakra-ui/core'
+import { theme as chakraTheme, ColorMode } from '@chakra-ui/core'
 
 export const theme = {
   ...chakraTheme,
+  config: {
+    initialColorMode: 'dark' as ColorMode,
+  },
   fontSizes: {
     xs: '0.75rem',
     sm: '0.875rem',

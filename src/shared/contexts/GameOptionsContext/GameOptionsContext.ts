@@ -1,6 +1,6 @@
 import React from 'react'
 
-type GameOptionsContext = {
+export type GameOptionsContext = {
   onGameSettingsClick?: (gameName: string) => void
   onGameHelpClick?: (gameName: string) => void
 }

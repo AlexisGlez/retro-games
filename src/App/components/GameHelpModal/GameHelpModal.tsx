@@ -25,7 +25,7 @@ export const GameHelpModal: React.FC<GameHelpModalProps> = ({
   gameName,
   gameHelp,
 }) => (
-  <Modal isOpen={isOpen} onClose={onClose} size="sm" isCentered>
+  <Modal isOpen={isOpen} onClose={onClose} size="md">
     <ModalOverlay />
     <ModalContent>
       <ModalHeader fontSize="xl" textAlign="center">
@@ -38,7 +38,7 @@ export const GameHelpModal: React.FC<GameHelpModalProps> = ({
         <GameHelpSection title="How do I play?" content={gameHelp.controls} mt="1.5rem" />
       </ModalBody>
       <ModalFooter justifyContent="center">
-        <Button variantColor="green" mr={3} onClick={onClose}>
+        <Button colorScheme="green" mr={3} onClick={onClose}>
           Ok!
         </Button>
       </ModalFooter>

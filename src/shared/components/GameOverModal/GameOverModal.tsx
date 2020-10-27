@@ -18,7 +18,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
   onReturnHomeClick,
   onPlayAgainClick,
 }) => {
-  const { isOpen, onClose } = useDisclosure(true)
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
 
   const returnHome = () => {
     onClose()
@@ -41,10 +41,10 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
           What do you want to do next?
         </ModalBody>
         <ModalFooter justifyContent="space-around">
-          <Button variantColor="blue" mr={3} onClick={returnHome}>
+          <Button colorScheme="blue" mr={3} onClick={returnHome}>
             Return to Home
           </Button>
-          <Button variantColor="green" onClick={playAgain}>
+          <Button colorScheme="green" onClick={playAgain}>
             Play Again!
           </Button>
         </ModalFooter>
