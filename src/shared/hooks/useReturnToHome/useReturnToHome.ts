@@ -5,6 +5,6 @@ export function useReturnToHome() {
   const router = useRouter()
 
   return React.useCallback(() => {
-    router.back()
+    router.replace('/')
   }, [router])
 }

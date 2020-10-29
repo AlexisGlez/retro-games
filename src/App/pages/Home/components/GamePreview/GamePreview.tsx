@@ -47,16 +47,19 @@ export const GamePreview: React.FC<GamePreview> = ({
       >
         <Image
           position="absolute"
-          src={`/img/${imageName}.png`}
-          alt={`${imageAlt} Demo Placeholder`}
+          top={0}
+          src={`/img/${imageName}.gif`}
+          alt={`${imageAlt} Demo`}
           width="100%"
           height="100%"
           objectFit="cover"
           borderRadius={gameBorder}
         />
         <Image
-          src={`/img/${imageName}.gif`}
-          alt={`${imageAlt} Demo`}
+          position="relative"
+          top={0}
+          src={`/img/${imageName}.png`}
+          alt={`${imageAlt} Demo Placeholder`}
           width="100%"
           height="100%"
           objectFit="cover"

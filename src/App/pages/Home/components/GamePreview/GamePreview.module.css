@@ -1,4 +1,4 @@
-.link:hover img:first-child {
+.link:hover img:last-of-type {
   opacity: 0;
 }
 

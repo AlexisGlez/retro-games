@@ -127,19 +127,19 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
         <title>PacMan</title>
       </Head>
       <section>
-        <audio id="gameStartSound">
+        <audio id="gameStartSound" key="gameStartSound">
           <source src="/sounds/pacman/game_start.wav" />
         </audio>
-        <audio id="pillSound">
+        <audio id="pillSound" key="pillSound">
           <source src="/sounds/pacman/pill.wav" />
         </audio>
-        <audio id="munchSound">
+        <audio id="munchSound" key="munchSound">
           <source src="/sounds/pacman/munch.wav" />
         </audio>
-        <audio id="eatGhostSound">
+        <audio id="eatGhostSound" key="eatGhostSound">
           <source src="/sounds/pacman/eat_ghost.wav" />
         </audio>
-        <audio id="deathSound">
+        <audio id="deathSound" key="deathSound">
           <source src="/sounds/pacman/death.wav" />
         </audio>
         <FullScreen containerProps={handlers}>
