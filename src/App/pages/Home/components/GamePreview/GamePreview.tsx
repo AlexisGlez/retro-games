@@ -2,7 +2,8 @@
 
 import React from 'react'
 import NextLink from 'next/link'
-import { Text, Image, Link, IconButton, DarkMode } from '@chakra-ui/core'
+import Image from 'next/image'
+import { Text, Link, IconButton, DarkMode } from '@chakra-ui/core'
 import { SettingsIcon, QuestionIcon } from '@chakra-ui/icons'
 
 const Icons = {
@@ -16,6 +17,8 @@ import { GameOptionsContext } from '@app-shared/contexts/GameOptionsContext'
 import styles from './GamePreview.module.css'
 
 const gameBorder = 8
+const imageWidth = 410
+const imageHeight = 300
 
 export const GamePreview: React.FC<GamePreview> = ({
   gameName,
@@ -44,26 +47,23 @@ export const GamePreview: React.FC<GamePreview> = ({
         borderWidth={1}
         borderColor={theme.colors.whiteAlpha[500]}
         borderRadius={gameBorder}
+        width="100%"
+        height="100%"
+        tabIndex={0}
       >
         <Image
-          position="absolute"
-          top={0}
+          className={styles.image}
           src={`/img/${imageName}.gif`}
           alt={`${imageAlt} Demo`}
-          width="100%"
-          height="100%"
-          objectFit="cover"
-          borderRadius={gameBorder}
+          width={imageWidth}
+          height={imageHeight}
         />
         <Image
-          position="relative"
-          top={0}
+          className={styles.image}
           src={`/img/${imageName}.png`}
           alt={`${imageAlt} Demo Placeholder`}
-          width="100%"
-          height="100%"
-          objectFit="cover"
-          borderRadius={gameBorder}
+          width={imageWidth}
+          height={imageHeight}
         />
         <DarkMode>
           <IconButton
