@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { getRowAndColFromElement } from '@app-shared/utils/getRowAndColFromElement'
+
 import styles from './Screen.module.css'
 
 type ScreenProps = {
@@ -10,21 +12,8 @@ type ScreenProps = {
 
 export const Screen: React.FC<ScreenProps> = ({ cellSize, gameGrid, onCellInteraction }) => {
   const triggerGameStateChange = (element: HTMLElement, action: MinesweeperGame.Action) => {
-    const dataRow = element.getAttribute('data-row')
-    const dataCol = element.getAttribute('data-col')
-
-    if (dataRow == null || dataCol == null) {
-      return
-    }
-
-    const row = parseInt(dataRow)
-    const col = parseInt(dataCol)
-
-    if (Number.isNaN(row) || Number.isNaN(col)) {
-      return
-    }
-
-    onCellInteraction(action, row, col)
+    const data = getRowAndColFromElement(element)
+    onCellInteraction(action, data.row, data.col)
   }
 
   const onCellClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
