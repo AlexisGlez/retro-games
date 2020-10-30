@@ -103,4 +103,4 @@ export const Minesweeper: React.FC<MinesweeperGameProps> = ({ bombs = 3 }) => {
   )
 }
 
-Minesweeper.displayName = constants.pages.minesweeper
+Minesweeper.displayName = constants.pages.Minesweeper

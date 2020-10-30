@@ -91,4 +91,4 @@ export const Snake: React.FC<SnakeGameProps> = ({ cellSize = 20, gameSpeed = 1 }
   )
 }
 
-Snake.displayName = constants.pages.snake
+Snake.displayName = constants.pages.Snake

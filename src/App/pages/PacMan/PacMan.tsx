@@ -30,7 +30,6 @@ function resetGlobalVariables() {
 }
 
 function playStartGameSound() {
-  console.log(startGameSoundHasPlayed)
   if (!startGameSoundHasPlayed) {
     playSound('gameStartSound')
     startGameSoundHasPlayed = true
@@ -153,4 +152,4 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
   )
 }
 
-PacMan.displayName = constants.pages.pacMan
+PacMan.displayName = constants.pages.PacMan

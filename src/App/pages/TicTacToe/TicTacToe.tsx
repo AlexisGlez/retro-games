@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { GameOverModal } from '@app-shared/components/GameOverModal'
 import { FullScreen } from '@app-shared/components/FullScreen'
 import { useReturnToHome } from '@app-shared/hooks/useReturnToHome'
-import { constants } from '@app-src/shared/constants'
+// import { constants } from '@app-src/shared/constants'
 
 import { TicTacToeController } from './controller/TicTacToeController'
 import { Screen } from './components/Screen'
@@ -14,7 +14,7 @@ import { Screen } from './components/Screen'
 let gameController: TicTacToeController | undefined
 
 export const TicTacToe: React.FC<TicTacToeGameProps> = ({}) => {
-  const [gameState, setGameState] = React.useState<{}>({})
+  const [, setGameState] = React.useState<{}>({})
   const [isGameOver, setIsGameOver] = React.useState(false)
 
   React.useEffect(() => {
@@ -59,4 +59,5 @@ export const TicTacToe: React.FC<TicTacToeGameProps> = ({}) => {
   )
 }
 
-TicTacToe.displayName = constants.pages.ticTacToe
+// TODO:
+// TicTacToe.displayName = constants.pages.ticTacToe

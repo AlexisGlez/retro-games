@@ -1,7 +1,6 @@
-export const pages = {
-  home: 'Home',
-  snake: 'Snake',
-  minesweeper: 'Minesweeper',
-  pacMan: 'PacMan',
-  ticTacToe: 'TicTacToe',
-} as const
+export const pages: Record<PageNames, PageNames> = {
+  Home: 'Home',
+  Snake: 'Snake',
+  Minesweeper: 'Minesweeper',
+  PacMan: 'PacMan',
+}
