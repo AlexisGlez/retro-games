@@ -3,4 +3,5 @@ export const pages = {
   snake: 'Snake',
   minesweeper: 'Minesweeper',
   pacMan: 'PacMan',
+  ticTacToe: 'TicTacToe',
 } as const

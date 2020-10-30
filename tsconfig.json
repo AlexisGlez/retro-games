@@ -22,7 +22,8 @@
       "@app-home/*": ["src/App/pages/Home/*"],
       "@app-snake/*": ["src/App/pages/Snake/*"],
       "@app-pacman/*": ["src/App/pages/PacMan/*"],
-      "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"]
+      "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"],
+      "@app-tictactoe/*": ["src/App/pages/TicTacToe/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,
