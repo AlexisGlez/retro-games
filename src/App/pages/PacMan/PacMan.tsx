@@ -26,6 +26,7 @@ function resetGlobalVariables() {
   clearTimeout(powerPillTimerId)
   clearInterval(intervalId)
   gameController = undefined
+  startGameSoundHasPlayed = false
 }
 
 function playStartGameSound() {
