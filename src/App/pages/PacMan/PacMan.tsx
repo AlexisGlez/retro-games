@@ -26,9 +26,11 @@ function resetGlobalVariables() {
   clearTimeout(powerPillTimerId)
   clearInterval(intervalId)
   gameController = undefined
+  startGameSoundHasPlayed = false
 }
 
 function playStartGameSound() {
+  console.log(startGameSoundHasPlayed)
   if (!startGameSoundHasPlayed) {
     playSound('gameStartSound')
     startGameSoundHasPlayed = true
@@ -64,16 +66,14 @@ export const PacMan: React.FC<PacManGameProps> = ({ gameSpeed = 1, level = 'easy
   React.useEffect(() => {
     runGame()
 
-    const initialSoundCallback = () => {
-      playStartGameSound()
-      document.removeEventListener('keydown', initialSoundCallback)
-      document.removeEventListener('click', initialSoundCallback)
+    document.addEventListener('keydown', playStartGameSound)
+    document.addEventListener('click', playStartGameSound)
+
+    return () => {
+      resetGlobalVariables()
+      document.removeEventListener('keydown', playStartGameSound)
+      document.removeEventListener('click', playStartGameSound)
     }
-
-    document.addEventListener('keydown', initialSoundCallback)
-    document.addEventListener('click', initialSoundCallback)
-
-    return resetGlobalVariables
   }, [])
 
   const runGame = React.useCallback(() => {
