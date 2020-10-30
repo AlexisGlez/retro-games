@@ -57,6 +57,7 @@ export const GamePreview: React.FC<GamePreview> = ({
           alt={`${imageAlt} Demo`}
           width={imageWidth}
           height={imageHeight}
+          unoptimized
         />
         <Image
           className={styles.image}
@@ -64,6 +65,7 @@ export const GamePreview: React.FC<GamePreview> = ({
           alt={`${imageAlt} Demo Placeholder`}
           width={imageWidth}
           height={imageHeight}
+          unoptimized
         />
         <DarkMode>
           <IconButton
