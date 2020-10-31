@@ -1,1 +1,3 @@
-type TicTacToeGameProps = {}
+type TicTacToeGameProps = {
+  oponent: 'player' | 'cpu'
+}
