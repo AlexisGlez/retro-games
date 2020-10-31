@@ -12,7 +12,7 @@ import { pagesConfig } from './config'
 export function App({ Component, pageProps }: AppProps) {
   const [currentPagesConfig, setCurrentPagesConfig] = React.useState(pagesConfig)
 
-  const additionalProps = currentPagesConfig[Component.displayName as PageNames] || {}
+  const additionalProps = { ...currentPagesConfig[Component.displayName as PageNames] } || {}
   if (Component.displayName === constants.pages.Home) {
     ;(additionalProps as HomeData).onGameConfigChange = setCurrentPagesConfig
   }

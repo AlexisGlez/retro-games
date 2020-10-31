@@ -19,6 +19,12 @@ export const pagesConfig: PagesConfig = {
         imageName: 'minesweeper_demo',
         imageAlt: 'Minesweeper Game',
       },
+      TicTacToe: {
+        gameName: 'TicTacToe',
+        gamePageName: 'tic-tac-toe',
+        imageName: 'tictactoe_demo',
+        imageAlt: 'TicTacToe Game',
+      },
     },
   },
   Snake: {
@@ -31,6 +37,9 @@ export const pagesConfig: PagesConfig = {
   },
   Minesweeper: {
     bombs: 3,
+  },
+  TicTacToe: {
+    oponent: 'player',
   },
 }
 
@@ -89,6 +98,16 @@ export const gamesSettings: GamesSettings = {
       max: 150,
     },
   ],
+  TicTacToe: [
+    {
+      propertyName: 'oponent',
+      displayName: 'Oponent',
+      type: 'string',
+      helperText: 'Who are you playing with?',
+      currentValue: pagesConfig.TicTacToe.oponent,
+      options: ['player'],
+    },
+  ],
 }
 
 export const gamesHelp: GamesHelp = {
@@ -113,5 +132,12 @@ export const gamesHelp: GamesHelp = {
     gameOver:
       'The player loses if a bomb is clicked. The player wins by placing all the flags on the bombs cells.',
     controls: 'Click on a cell to reveal it. To put a flag, right click on the cell.',
+  },
+  TicTacToe: {
+    description: 'Two players, X and O, take turns to mark the spaces in a 3×3 grid.',
+    gameOver:
+      'The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.',
+    controls:
+      'Click on an empty cell to mark it as yours! The current player is automatically handle by me. We start with the player "X"',
   },
 }
