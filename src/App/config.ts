@@ -25,6 +25,12 @@ export const pagesConfig: PagesConfig = {
         imageName: 'tictactoe_demo',
         imageAlt: 'TicTacToe Game',
       },
+      Chess: {
+        gameName: 'Chess',
+        gamePageName: 'chess',
+        imageName: 'chess_demo',
+        imageAlt: 'Chess Game',
+      },
     },
   },
   Snake: {
@@ -39,6 +45,9 @@ export const pagesConfig: PagesConfig = {
     bombs: 3,
   },
   TicTacToe: {
+    oponent: 'player',
+  },
+  Chess: {
     oponent: 'player',
   },
 }
@@ -108,6 +117,16 @@ export const gamesSettings: GamesSettings = {
       options: ['player'],
     },
   ],
+  Chess: [
+    {
+      propertyName: 'oponent',
+      displayName: 'Oponent',
+      type: 'string',
+      helperText: 'Who are you playing with?',
+      currentValue: pagesConfig.Chess.oponent,
+      options: ['player'],
+    },
+  ],
 }
 
 export const gamesHelp: GamesHelp = {
@@ -139,5 +158,10 @@ export const gamesHelp: GamesHelp = {
       'The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.',
     controls:
       'Click on an empty cell to mark it as yours! The current player is automatically handle by me. We start with the player "X"',
+  },
+  Chess: {
+    description: 'Two players take turns to conquer.',
+    gameOver: 'The player who is able to do a check mate is the winner. Currently, the game does not identify check mate or tie, but if there are no any available movements (if an user cannot move its pieces anymore), means that the game is over.',
+    controls: 'Click on a piece and then click on the cell where you want your piece to be moved. If nothing happens, the movement was invalid and you need to repeat the process.',
   },
 }
