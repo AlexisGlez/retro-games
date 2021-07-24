@@ -1,0 +1,38 @@
+.screen {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  height: 100vh;
+  margin: 0 auto;
+  max-height: 640px;
+  max-width: 640px;
+  position: relative;
+  width: 100%;
+}
+
+.screen > div {
+  position: absolute;
+  background-color: white;
+}
+
+.button {
+  background-color: bisque;
+  background-size: 100%;
+  border-width: 0 8px 8px 0;
+  border: 1px solid black;
+  font-size: 1rem;
+  width: 80px;
+  height: 80px;
+  color: black;
+}
+
+.button:nth-child(-2n + 8),
+.button:nth-child(8) ~ button:nth-child(-2n + 15),
+.button:nth-child(16) ~ button:nth-child(-2n + 24),
+.button:nth-child(24) ~ button:nth-child(-2n + 31),
+.button:nth-child(32) ~ button:nth-child(-2n + 40),
+.button:nth-child(40) ~ button:nth-child(-2n + 47),
+.button:nth-child(48) ~ button:nth-child(-2n + 56),
+.button:nth-child(56) ~ button:nth-child(-2n + 63) {
+  background-color: beige;
+}

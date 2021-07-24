@@ -1,6 +1,6 @@
 type ChildrenOnlyProp = { children: React.ReactNode }
 
-type GameNames = 'Snake' | 'Minesweeper' | 'PacMan' | 'TicTacToe'
+type GameNames = 'Snake' | 'Minesweeper' | 'PacMan' | 'TicTacToe' | 'Chess'
 
 type PageNames = 'Home' | GameNames
 
@@ -10,6 +10,7 @@ type PagesConfig = {
   Minesweeper: MinesweeperGameProps
   PacMan: PacManGameProps
   TicTacToe: TicTacToeGameProps
+  Chess: ChessGameProps
 }
 
 type ArrowControls = 'Up' | 'Right' | 'Down' | 'Left' | string
