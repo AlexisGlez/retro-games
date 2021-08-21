@@ -4,8 +4,8 @@
   grid-template-rows: repeat(8, 1fr);
   height: 100vh;
   margin: 0 auto;
-  max-height: 640px;
-  max-width: 640px;
+  max-height: 100vmin;
+  max-width: 100vmin;
   position: relative;
   width: 100%;
 }
@@ -17,12 +17,11 @@
 
 .button {
   background-color: bisque;
+  background-repeat: no-repeat;
   background-size: 100%;
   border-width: 0 8px 8px 0;
   border: 1px solid black;
   font-size: 1rem;
-  width: 80px;
-  height: 80px;
   color: black;
 }
 
