@@ -31,6 +31,12 @@ export const pagesConfig: PagesConfig = {
         imageName: 'chess_demo',
         imageAlt: 'Chess Game',
       },
+      Wordle: {
+        gameName: 'Wordle',
+        gamePageName: 'wordle',
+        imageName: 'wordle_demo',
+        imageAlt: 'Wordle Game',
+      },
     },
   },
   Snake: {
@@ -49,6 +55,9 @@ export const pagesConfig: PagesConfig = {
   },
   Chess: {
     oponent: 'player',
+  },
+  Wordle: {
+    difficulty: 'normal',
   },
 }
 
@@ -127,6 +136,16 @@ export const gamesSettings: GamesSettings = {
       options: ['player'],
     },
   ],
+  Wordle: [
+    {
+      propertyName: 'difficulty',
+      displayName: 'Difficulty',
+      type: 'string',
+      helperText: 'Number of guesses to find the word.',
+      currentValue: pagesConfig.Wordle.difficulty,
+      options: ['easy', 'normal', 'hard', 'extremely-hard'],
+    },
+  ],
 }
 
 export const gamesHelp: GamesHelp = {
@@ -161,7 +180,14 @@ export const gamesHelp: GamesHelp = {
   },
   Chess: {
     description: 'Two players take turns to conquer.',
-    gameOver: 'The player who is able to do a check mate is the winner. Currently, the game does not identify check mate or tie, but if there are no any available movements (if an user cannot move its pieces anymore), means that the game is over.',
-    controls: 'Click on a piece and then click on the cell where you want your piece to be moved. If nothing happens, the movement was invalid and you need to repeat the process.',
+    gameOver:
+      'The player who is able to do a check mate is the winner. Currently, the game does not identify check mate or tie, but if there are no any available movements (if an user cannot move its pieces anymore), means that the game is over.',
+    controls:
+      'Click on a piece and then click on the cell where you want your piece to be moved. If nothing happens, the movement was invalid and you need to repeat the process.',
+  },
+  Wordle: {
+    description: 'Guess the mystery word!',
+    gameOver: 'The game ends if either the mystery word is guessed or if there are no more attempts left.',
+    controls: 'Each guess must be a valid five-letter word. Hit the enter button to submit. After each guess, the color of the tiles will change to show how close your guess was to the word.',
   },
 }
