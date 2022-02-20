@@ -1,5 +1,7 @@
 /// <reference path="./WordleController.d.ts" />
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from 'axios'
+
+import defaultWords from './words.json'
 
 const getRandomWordsRequest: AxiosRequestConfig = {
   method: 'GET',
@@ -7,11 +9,9 @@ const getRandomWordsRequest: AxiosRequestConfig = {
   params: { count: '20', wordLength: '5' },
   headers: {
     'x-rapidapi-host': 'random-words5.p.rapidapi.com',
-    'x-rapidapi-key': '20c359e3aemshb39bc8174e9b5e4p154b57jsn672c5754ee1e'
-  }
-};
-
-const defaultWords = ['maple', 'ultra', 'super', 'sorry', 'basic', 'dairy', 'fairy', 'disco', 'logic', 'stool', 'price', 'apple']
+    'x-rapidapi-key': '20c359e3aemshb39bc8174e9b5e4p154b57jsn672c5754ee1e',
+  },
+}
 
 export class WordleController {
   public static keys = {
@@ -46,8 +46,11 @@ export class WordleController {
 
     try {
       const response = await axios.request(getRandomWordsRequest)
-      this.wordsList = (response.data as string[]).map(word => word.toLowerCase())
-    } catch(error) {
+      this.wordsList = [
+        ...defaultWords,
+        ...(response.data as string[]).map((word) => word.toLowerCase()),
+      ]
+    } catch (error) {
       console.error(error)
       this.wordsList = defaultWords
     }
@@ -89,7 +92,7 @@ export class WordleController {
       errorState: this.errorState,
       processedLetters: this.processedLetters,
       currentRow: this.currentRow,
-      targetWord: this.gameStatus !== 'ongoing' ? this.targetWord : ''
+      targetWord: this.gameStatus !== 'ongoing' ? this.targetWord : '',
     }
   }
 
