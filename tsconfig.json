@@ -8,7 +8,11 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -17,15 +21,33 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@app-src/*": ["src/*"],
-      "@app-shared/*": ["src/shared/*"],
-      "@app-home/*": ["src/App/pages/Home/*"],
-      "@app-snake/*": ["src/App/pages/Snake/*"],
-      "@app-pacman/*": ["src/App/pages/PacMan/*"],
-      "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"],
-      "@app-tictactoe/*": ["src/App/pages/TicTacToe/*"],
-      "@app-chess/*": ["src/App/pages/Chess/*"],
-      "@app-wordle/*": ["src/App/pages/Wordle/*"]
+      "@app-src/*": [
+        "src/*"
+      ],
+      "@app-shared/*": [
+        "src/shared/*"
+      ],
+      "@app-home/*": [
+        "src/App/pages/Home/*"
+      ],
+      "@app-snake/*": [
+        "src/App/pages/Snake/*"
+      ],
+      "@app-pacman/*": [
+        "src/App/pages/PacMan/*"
+      ],
+      "@app-minesweeper/*": [
+        "src/App/pages/Minesweeper/*"
+      ],
+      "@app-tictactoe/*": [
+        "src/App/pages/TicTacToe/*"
+      ],
+      "@app-chess/*": [
+        "src/App/pages/Chess/*"
+      ],
+      "@app-wordle/*": [
+        "src/App/pages/Wordle/*"
+      ]
     },
     "preserveConstEnums": true,
     "removeComments": false,
@@ -34,8 +56,19 @@
     "strict": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "target": "es5"
+    "target": "es5",
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", ".next", "out", "next.config.js", "node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    ".next",
+    "out",
+    "next.config.js",
+    "node_modules"
+  ]
 }
