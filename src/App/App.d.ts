@@ -1,6 +1,6 @@
 type ChildrenOnlyProp = { children: React.ReactNode }
 
-type GameNames = 'Snake' | 'Minesweeper' | 'PacMan' | 'TicTacToe' | 'Chess'
+type GameNames = 'Snake' | 'Minesweeper' | 'PacMan' | 'TicTacToe' | 'Chess' | 'Wordle'
 
 type PageNames = 'Home' | GameNames
 
@@ -11,6 +11,7 @@ type PagesConfig = {
   PacMan: PacManGameProps
   TicTacToe: TicTacToeGameProps
   Chess: ChessGameProps
+  Wordle: WordleGameProps
 }
 
 type ArrowControls = 'Up' | 'Right' | 'Down' | 'Left' | string
@@ -22,5 +23,5 @@ type GamesSettings = Record<GameNames, Array<GameSetting>>
 type GamesHelp = Record<GameNames, GameHelpModal.GameHelp>
 
 interface ArrowMovement {
-  public requestArrowMovement: (pressedControl: ArrowControls) => void
+  requestArrowMovement: (pressedControl: ArrowControls) => void
 }

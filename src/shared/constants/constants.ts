@@ -5,4 +5,5 @@ export const pages: Record<PageNames, PageNames> = {
   PacMan: 'PacMan',
   TicTacToe: 'TicTacToe',
   Chess: 'Chess',
+  Wordle: 'Wordle',
 }

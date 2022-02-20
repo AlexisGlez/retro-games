@@ -24,7 +24,8 @@
       "@app-pacman/*": ["src/App/pages/PacMan/*"],
       "@app-minesweeper/*": ["src/App/pages/Minesweeper/*"],
       "@app-tictactoe/*": ["src/App/pages/TicTacToe/*"],
-      "@app-chess/*": ["src/App/pages/Chess/*"]
+      "@app-chess/*": ["src/App/pages/Chess/*"],
+      "@app-wordle/*": ["src/App/pages/Wordle/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,
