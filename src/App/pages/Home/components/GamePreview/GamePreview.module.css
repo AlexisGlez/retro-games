@@ -3,7 +3,7 @@
   object-fit: contain;
 }
 
-.link div {
+.link span {
   height: 100% !important;
   width: 100% !important;
   top: 0;
@@ -14,16 +14,16 @@
   background: #1A202C;
 }
 
-.link > div:first-of-type {
+.link > span:first-of-type {
   position: absolute !important;
 }
 
-.link > div:last-of-type {
+.link > span:last-of-type {
   position: relative !important;
 }
 
-.link:hover > div:last-of-type,
-.link:focus > div:last-of-type {
+.link:hover > span:last-of-type,
+.link:focus > span:last-of-type {
   opacity: 0 !important;
 }
 
