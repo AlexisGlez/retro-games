@@ -62,6 +62,13 @@ const tetrominoes: { [key in TetrisGame.TetrominoesShapes]: TetrisGame.Tetromino
   ],
 }
 
+function getCellSize(difficulty: TetrisGameProps['difficulty']) {
+  const difficultyLevel = mobileDifficultyLevels[difficulty]
+  return isServer() || window.innerWidth < 920
+    ? difficultyLevel.cellSize
+    : difficultyLevel.cellSize * 2
+}
+
 export class TetrisController extends GridGameController implements ArrowMovement {
   private game: TetrisGame.Game = []
   private gameStatus: GameStatus = 'ongoing'
@@ -74,15 +81,9 @@ export class TetrisController extends GridGameController implements ArrowMovemen
   private cellSize: number
 
   public constructor(difficulty: TetrisGameProps['difficulty']) {
-    const difficultyLevel = mobileDifficultyLevels[difficulty]
-    const cellSize =
-      isServer() || window.innerWidth < 920
-        ? difficultyLevel.cellSize
-        : difficultyLevel.cellSize * 2
+    super(getCellSize(difficulty))
 
-    super(cellSize)
-
-    this.cellSize = cellSize
+    this.cellSize = getCellSize(difficulty)
 
     this.game = Array.from(Array(this.heightLimit), () => Array(this.widthLimit).fill([0, 'blank']))
     this.initializePlayer()
