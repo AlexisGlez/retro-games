@@ -57,7 +57,7 @@ export class SnakeGameController extends GridGameController implements ArrowMove
     let xLimit = this.widthLimit
     let yLimit = this.heightLimit
 
-    // At the beggining of the game, the snake will have a size of 3.
+    // At the beginning of the game, the snake will have a size of 3.
     // To ensure the snake starts in a random position that fits in the
     // screen size, we need to extract 2 of the maximum width or height
     // depending on the starting snake alignment (vertical/horizontal)

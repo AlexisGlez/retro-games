@@ -6,4 +6,5 @@ export const pages: Record<PageNames, PageNames> = {
   TicTacToe: 'TicTacToe',
   Chess: 'Chess',
   Wordle: 'Wordle',
+  Tetris: 'Tetris',
 }
