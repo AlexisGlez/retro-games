@@ -37,6 +37,12 @@ export const pagesConfig: PagesConfig = {
         imageName: 'wordle_demo',
         imageAlt: 'Wordle Game',
       },
+      Tetris: {
+        gameName: 'Tetris',
+        gamePageName: 'tetris',
+        imageName: 'tetris_demo',
+        imageAlt: 'Tetris Game',
+      },
     },
   },
   Snake: {
@@ -57,6 +63,9 @@ export const pagesConfig: PagesConfig = {
     oponent: 'player',
   },
   Wordle: {
+    difficulty: 'normal',
+  },
+  Tetris: {
     difficulty: 'normal',
   },
 }
@@ -146,6 +155,16 @@ export const gamesSettings: GamesSettings = {
       options: ['easy', 'normal', 'hard', 'extremely-hard'],
     },
   ],
+  Tetris: [
+    {
+      propertyName: 'difficulty',
+      displayName: 'Difficulty',
+      type: 'string',
+      helperText: 'Number of guesses to find the word.',
+      currentValue: pagesConfig.Tetris.difficulty,
+      options: ['easy', 'normal', 'hard', 'extremely-hard'],
+    },
+  ],
 }
 
 export const gamesHelp: GamesHelp = {
@@ -187,7 +206,17 @@ export const gamesHelp: GamesHelp = {
   },
   Wordle: {
     description: 'Guess the mystery word!',
-    gameOver: 'The game ends if either the mystery word is guessed or if there are no more attempts left.',
-    controls: 'Each guess must be a valid five-letter word. Hit the enter button to submit. After each guess, the color of the tiles will change to show how close your guess was to the word.',
+    gameOver:
+      'The game ends if either the mystery word is guessed or if there are no more attempts left.',
+    controls:
+      'Each guess must be a valid five-letter word. Hit the enter button to submit. After each guess, the color of the tiles will change to show how close your guess was to the word.',
+  },
+  Tetris: {
+    description:
+      'Complete lines by moving differently shaped pieces (tetrominoes), which descend onto the playing field.',
+    gameOver:
+      'The completed lines disappear and grant the player points, and the player can proceed to fill the vacated spaces. The game ends when the playing field is filled. The longer the player can delay this outcome, the higher their score will be.',
+    controls:
+      'Use the arrow keys from your keyboard or buttons in screen to move, rotate, or increase the speed of the tetrominoes.',
   },
 }

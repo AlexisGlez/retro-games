@@ -1,0 +1,72 @@
+.screen {
+  align-content: center;
+  display: grid;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.screen div {
+  border: 4px solid;
+  width: auto;
+}
+
+.screen div[data-tetrominoe-type='0'] {
+  border: 1px solid rgb(0, 0, 0, 0.3);
+}
+
+.screen div[data-tetrominoe-type='I'] {
+  background-color: rgba(80, 227, 230, 0.7);
+  border-bottom-color: rgba(80, 227, 230, 0.1);
+  border-right-color: rgba(80, 227, 230, 1);
+  border-top-color: rgba(80, 227, 230, 1);
+  border-left-color: rgba(80, 227, 230, 0.3);
+}
+
+.screen div[data-tetrominoe-type='J'] {
+  background-color: rgba(36, 95, 223, 0.7);
+  border-bottom-color: rgba(36, 95, 223, 0.1);
+  border-right-color: rgba(36, 95, 223, 1);
+  border-top-color: rgba(36, 95, 223, 1);
+  border-left-color: rgba(36, 95, 223, 0.3);
+}
+
+.screen div[data-tetrominoe-type='L'] {
+  background-color: rgba(223, 173, 36, 0.7);
+  border-bottom-color: rgba(223, 173, 36, 0.1);
+  border-right-color: rgba(223, 173, 36, 1);
+  border-top-color: rgba(223, 173, 36, 1);
+  border-left-color: rgba(223, 173, 36, 0.3);
+}
+
+.screen div[data-tetrominoe-type='O'] {
+  background-color: rgba(223, 217, 36, 0.7);
+  border-bottom-color: rgba(223, 217, 36, 0.1);
+  border-right-color: rgba(223, 217, 36, 1);
+  border-top-color: rgba(223, 217, 36, 1);
+  border-left-color: rgba(223, 217, 36, 0.3);
+}
+
+.screen div[data-tetrominoe-type='S'] {
+  background-color: rgba(48, 211, 56, 0.7);
+  border-bottom-color: rgba(48, 211, 56, 0.1);
+  border-right-color: rgba(48, 211, 56, 1);
+  border-top-color: rgba(48, 211, 56, 1);
+  border-left-color: rgba(48, 211, 56, 0.3);
+}
+
+.screen div[data-tetrominoe-type='T'] {
+  background-color: rgba(132, 61, 198, 0.7);
+  border-bottom-color: rgba(132, 61, 198, 0.1);
+  border-right-color: rgba(132, 61, 198, 1);
+  border-top-color: rgba(132, 61, 198, 1);
+  border-left-color: rgba(132, 61, 198, 0.3);
+}
+
+.screen div[data-tetrominoe-type='Z'] {
+  background-color: rgba(227, 78, 78, 0.7);
+  border-bottom-color: rgba(227, 78, 78, 0.1);
+  border-right-color: rgba(227, 78, 78, 1);
+  border-top-color: rgba(227, 78, 78, 1);
+  border-left-color: rgba(227, 78, 78, 0.3);
+}

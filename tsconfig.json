@@ -47,6 +47,9 @@
       ],
       "@app-wordle/*": [
         "src/App/pages/Wordle/*"
+      ],
+      "@app-tetris/*": [
+        "src/App/pages/Tetris/*"
       ]
     },
     "preserveConstEnums": true,
